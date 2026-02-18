@@ -59,10 +59,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     setupNavigation();
-
+    
     // Configurar selector de modelos
     setupModelSelector();
-
+    
     // Configurar actualización automática cada 4 horas
     setupAutoUpdate();
 });
@@ -72,18 +72,18 @@ document.addEventListener('DOMContentLoaded', async function () {
  */
 function setupModelSelector() {
     const modelButtons = document.querySelectorAll('#modelSelector .model-btn');
-
+    
     modelButtons.forEach(button => {
-        button.addEventListener('click', async function () {
+        button.addEventListener('click', async function() {
             const model = this.getAttribute('data-model');
-
+            
             if (model === modeloSeleccionado) {
                 return; // Ya está seleccionado
             }
-
+            
             modeloSeleccionado = model;
             console.log(`🔄 Cambiando a modelo: ${model}`);
-
+            
             // Actualizar UI de botones
             modelButtons.forEach(btn => {
                 btn.classList.remove('active');
@@ -93,25 +93,25 @@ function setupModelSelector() {
             this.classList.add('active');
             const input = this.querySelector('input[type="radio"]');
             if (input) input.checked = true;
-
+            
             // Mostrar indicador de carga
             const loadingIndicator = document.getElementById('modelLoadingIndicator');
             if (loadingIndicator) {
                 loadingIndicator.style.display = 'block';
             }
-
+            
             try {
                 // Cargar datos con el nuevo modelo
                 await cargarDatosConModelo(model);
-
+                
                 // Actualizar UI
                 updateUI(new Date());
-
+                
                 // Ocultar indicador de carga
                 if (loadingIndicator) {
                     loadingIndicator.style.display = 'none';
                 }
-
+                
                 mostrarMensajeExito(`Modelo ${obtenerNombreModelo(model)} cargado correctamente`);
             } catch (error) {
                 console.error('Error cargando modelo:', error);
@@ -142,18 +142,18 @@ function obtenerNombreModelo(model) {
  */
 function setupModelSelectorTorres() {
     const modelButtons = document.querySelectorAll('#modelSelectorTorres .model-btn');
-
+    
     if (modelButtons.length === 0) {
         console.warn('⚠️ No se encontraron botones de selector de modelos en Torres del Paine');
         return;
     }
-
+    
     // Actualizar indicador con modelo actual
     const modelIndicator = document.getElementById('modelIndicatorTorres');
     if (modelIndicator) {
         modelIndicator.innerHTML = `<i class="fas fa-layer-group"></i> Modelo activo: <strong>${obtenerNombreModelo(modeloSeleccionado)}</strong>`;
     }
-
+    
     // Seleccionar el botón correspondiente al modelo actual
     modelButtons.forEach(btn => {
         const input = btn.querySelector('input[type="radio"]');
@@ -165,18 +165,18 @@ function setupModelSelectorTorres() {
             if (input) input.checked = false;
         }
     });
-
+    
     modelButtons.forEach(button => {
-        button.addEventListener('click', async function () {
+        button.addEventListener('click', async function() {
             const model = this.getAttribute('data-model');
-
+            
             if (model === modeloSeleccionado) {
                 return; // Ya está seleccionado
             }
-
+            
             modeloSeleccionado = model;
             console.log(`🔄 Cambiando a modelo en Torres del Paine: ${model}`);
-
+            
             // Actualizar UI de botones
             const allButtons = document.querySelectorAll('#modelSelectorTorres .model-btn');
             allButtons.forEach(btn => {
@@ -187,33 +187,33 @@ function setupModelSelectorTorres() {
             this.classList.add('active');
             const input = this.querySelector('input[type="radio"]');
             if (input) input.checked = true;
-
+            
             // Actualizar indicador
             if (modelIndicator) {
                 modelIndicator.innerHTML = `<i class="fas fa-layer-group"></i> Modelo activo: <strong>${obtenerNombreModelo(model)}</strong>`;
             }
-
+            
             // Mostrar indicador de carga
             const loadingIndicator = document.getElementById('modelLoadingIndicatorTorres');
             if (loadingIndicator) {
                 loadingIndicator.style.display = 'block';
             }
-
+            
             try {
                 // Cargar datos con el nuevo modelo
                 await cargarDatosConModelo(model);
-
+                
                 // Actualizar mapa y widgets de Torres del Paine
                 if (torresMapInitialized && torresMap) {
                     renderTorresWeatherPoints();
                 }
                 updateTorresWidget();
-
+                
                 // Ocultar indicador de carga
                 if (loadingIndicator) {
                     loadingIndicator.style.display = 'none';
                 }
-
+                
                 mostrarMensajeExito(`Modelo ${obtenerNombreModelo(model)} cargado correctamente`);
             } catch (error) {
                 console.error('Error cargando modelo:', error);
@@ -231,10 +231,10 @@ function setupModelSelectorTorres() {
  */
 async function cargarDatosConModelo(model) {
     console.log(`🔄 Cargando datos con modelo: ${model}`);
-
+    
     // Actualizar cada lugar con el nuevo modelo
     const lugares = weatherApp.obtenerTodosLosLugares();
-
+    
     for (const nombreLugar of lugares) {
         // Buscar el lugar en weatherApp.lugares
         const lugar = weatherApp.lugares.find(l => l.nombre === nombreLugar);
@@ -242,7 +242,7 @@ async function cargarDatosConModelo(model) {
             console.warn(`⚠️ No se encontró lugar: ${nombreLugar}`);
             continue;
         }
-
+        
         try {
             let options = {
                 includeHourly: true,
@@ -250,37 +250,37 @@ async function cargarDatosConModelo(model) {
                 pastDays: 0,
                 forceRefresh: true
             };
-
+            
             if (model !== 'auto') {
                 // Usar modelo específico
                 options.model = model;
                 options.includeModels = true;
             }
-
+            
             const datos = await apiClient.obtenerDatosClima(
                 nombreLugar,
                 lugar.coords,
                 options
             );
-
+            
             if (datos) {
                 weatherApp.datosClima[nombreLugar] = datos;
             }
-
+            
             // Delay entre peticiones para evitar rate limiting
             await new Promise(resolve => setTimeout(resolve, 500));
         } catch (error) {
             console.error(`❌ Error cargando ${nombreLugar} con modelo ${model}:`, error);
         }
     }
-
+    
     // Actualizar timestamp de última actualización
     if (!weatherApp.lastUpdate) {
         weatherApp.lastUpdate = new Date();
     } else {
         weatherApp.lastUpdate = new Date();
     }
-
+    
     // Disparar evento de actualización manualmente
     window.dispatchEvent(new CustomEvent('weatherUpdated', {
         detail: { timestamp: weatherApp.lastUpdate }
@@ -292,7 +292,7 @@ async function cargarDatosConModelo(model) {
  */
 function setupAutoUpdate() {
     const intervalo4Horas = 4 * 60 * 60 * 1000; // 4 horas en milisegundos
-
+    
     // Actualizar inmediatamente si han pasado más de 4 horas desde la última actualización
     const ultimaActualizacion = weatherApp.obtenerUltimaActualizacion();
     if (ultimaActualizacion) {
@@ -302,7 +302,7 @@ function setupAutoUpdate() {
             weatherApp.actualizarDatos().catch(err => console.error('Error en actualización automática:', err));
         }
     }
-
+    
     // Configurar intervalo para actualizar cada 4 horas
     setInterval(async () => {
         console.log('🔄 Actualización automática cada 4 horas iniciada...');
@@ -314,7 +314,7 @@ function setupAutoUpdate() {
             console.error('❌ Error en actualización automática:', error);
         }
     }, intervalo4Horas);
-
+    
     console.log(`⏰ Actualización automática configurada cada 4 horas`);
 }
 
@@ -410,7 +410,7 @@ function renderWeatherCards() {
  */
 function setupCardNavigation() {
     const cardLinks = document.querySelectorAll('.place-card[data-city]');
-
+    
     cardLinks.forEach(function (card) {
         card.addEventListener('click', function () {
             const cityName = this.getAttribute('data-city');
@@ -449,7 +449,7 @@ function updateLastUpdatedInfo(date) {
         const fecha = new Date(date);
         const ahora = new Date();
         const diferenciaMinutos = Math.floor((ahora - fecha) / (1000 * 60));
-
+        
         let textoTiempo;
         if (diferenciaMinutos < 1) {
             textoTiempo = 'hace menos de 1 minuto';
@@ -459,7 +459,7 @@ function updateLastUpdatedInfo(date) {
             const horas = Math.floor(diferenciaMinutos / 60);
             textoTiempo = `hace ${horas} hora${horas > 1 ? 's' : ''}`;
         }
-
+        
         const formattedDate = fecha.toLocaleString('es-CL');
         infoElement.innerHTML = `
             <i class="fas fa-sync"></i> Actualizado: ${formattedDate} (${textoTiempo})
@@ -467,14 +467,14 @@ function updateLastUpdatedInfo(date) {
                 <i class="fas fa-sync-alt"></i> Actualizar
             </button>
         `;
-
+        
         // Agregar event listener al botón de actualización
         const btnRefresh = document.getElementById('btnRefreshWeather');
         if (btnRefresh) {
-            btnRefresh.addEventListener('click', async function () {
+            btnRefresh.addEventListener('click', async function() {
                 btnRefresh.disabled = true;
                 btnRefresh.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Actualizando...';
-
+                
                 try {
                     await weatherApp.actualizarDatos();
                     mostrarMensajeExito('Datos meteorológicos actualizados correctamente');
@@ -504,11 +504,11 @@ function mostrarMensajeExito(mensaje) {
         mensajeContainer.style.display = 'none';
         document.body.appendChild(mensajeContainer);
     }
-
+    
     mensajeContainer.textContent = mensaje;
     mensajeContainer.style.display = 'block';
     mensajeContainer.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3';
-
+    
     setTimeout(() => {
         mensajeContainer.style.display = 'none';
     }, 3000);
@@ -643,7 +643,7 @@ function initializeMap() {
 
     // Agregar botón personalizado para activar/desactivar viento
     const windControl = L.control({ position: 'topright' });
-    windControl.onAdd = function () {
+    windControl.onAdd = function() {
         const div = L.DomUtil.create('div', 'wind-control');
         div.innerHTML = `
             <button id="toggleWindLayer" class="btn btn-sm btn-primary" style="
@@ -660,22 +660,22 @@ function initializeMap() {
                 <i class="fas fa-wind"></i> Viento
             </button>
         `;
-
+        
         L.DomEvent.disableClickPropagation(div);
-
+        
         // Agregar evento de clic
         const button = div.querySelector('#toggleWindLayer');
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             toggleWindLayer();
         });
-
+        
         return div;
     };
     windControl.addTo(map);
 
     // Agregar leyenda de viento
     const windLegend = L.control({ position: 'bottomright' });
-    windLegend.onAdd = function () {
+    windLegend.onAdd = function() {
         const div = L.DomUtil.create('div', 'wind-legend');
         div.style.display = 'none'; // Oculto por defecto
         div.id = 'windLegend';
@@ -717,7 +717,7 @@ function toggleWindLayer() {
     windLayerEnabled = !windLayerEnabled;
     const button = document.querySelector('#toggleWindLayer');
     const legend = document.getElementById('windLegend');
-
+    
     if (windLayerEnabled) {
         windLayer.addTo(map);
         button.style.background = 'linear-gradient(135deg, #4caf50, #8bc34a)';
@@ -742,7 +742,7 @@ function updateWindLayer() {
     windLayer.clearLayers();
 
     const ciudades = weatherApp.obtenerTodosLosLugares();
-
+    
     ciudades.forEach(cityName => {
         const data = weatherApp.obtenerDatosClima(cityName);
         if (data && data.city && data.current) {
@@ -770,20 +770,20 @@ function updateWindLayer() {
 function addWindArrow(lat, lon, speed, direction, cityName) {
     // Convertir dirección de grados a radianes (Leaflet usa -180 a 180, pero la API da 0-360)
     const angle = (direction - 90) * (Math.PI / 180); // Ajustar para que 0° = Norte
-
+    
     // Longitud de la flecha basada en la velocidad del viento
     const arrowLength = Math.min(speed * 0.01, 0.5); // Escalar apropiadamente
-
+    
     // Calcular punto final de la flecha
     const endLat = lat + arrowLength * Math.cos(angle);
     const endLon = lon + arrowLength * Math.sin(angle);
-
+    
     // Color basado en la velocidad del viento
     let color = '#4caf50'; // Verde para viento suave
     if (speed > 40) color = '#f44336'; // Rojo para viento fuerte
     else if (speed > 25) color = '#ff9800'; // Naranja para viento moderado
     else if (speed > 15) color = '#ffc107'; // Amarillo para viento medio
-
+    
     // Crear línea de viento con flecha
     const windLine = L.polyline(
         [[lat, lon], [endLat, endLon]],
@@ -821,7 +821,7 @@ function addWindArrow(lat, lon, speed, direction, cityName) {
     // Agregar flecha al final de la línea usando SVG para mejor rotación
     const arrowSize = 8;
     const arrowAngle = direction * (Math.PI / 180);
-
+    
     const arrowHead = L.marker([endLat, endLon], {
         icon: L.divIcon({
             className: 'wind-arrow-head',
@@ -958,7 +958,7 @@ function renderCityTabs() {
 function setupCityTabsListeners() {
     const cityTabs = document.querySelectorAll('#cityTabs a[data-city]');
     cityTabs.forEach(tab => {
-        tab.addEventListener('click', function (e) {
+        tab.addEventListener('click', function(e) {
             e.preventDefault();
             const city = this.getAttribute('data-city');
             selectCityStats(city, this);
@@ -982,103 +982,6 @@ function selectCityStats(city, element) {
     document.getElementById('chartTitle').innerText = `${city}: Pronóstico 7 Días`;
 
     renderForecastChart(city);
-    renderCityDetailedStats(city);
-}
-
-/**
- * Renderizar tarjetas de estadísticas detalladas para una ciudad
- */
-function renderCityDetailedStats(city) {
-    const container = document.getElementById('cityStatsContainer');
-    if (!container) return;
-
-    const estadisticas = weatherApp.calcularEstadisticas(city);
-    if (!estadisticas) {
-        container.innerHTML = '';
-        return;
-    }
-
-    let html = `
-        <div class="row g-3">
-            <div class="col-12 col-md-4">
-                <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; padding: 1.25rem; text-align: center; height: 100%;">
-                    <h4 style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Temperatura Promedio</h4>
-                    <div style="font-size: 2.2rem; font-weight: bold;">${estadisticas.tempPromedio}°C</div>
-                    <div style="font-size: 0.8rem; opacity: 0.9; margin-top: 0.5rem;">
-                        <i class="fas fa-temperature-low"></i> Máx: ${estadisticas.tempMaxima}°C | Mín: ${estadisticas.tempMinima}°C
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 12px; padding: 1.25rem; text-align: center; height: 100%;">
-                    <h4 style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Sensación Térmica</h4>
-                    <div style="font-size: 2.2rem; font-weight: bold;">${estadisticas.sensacionPromedio}°C</div>
-                    <p style="font-size: 0.8rem; opacity: 0.9; margin-top: 0.5rem;">Promedio de sensación real percibida</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border-radius: 12px; padding: 1.25rem; text-align: center; height: 100%;">
-                    <h4 style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Precipitaciones</h4>
-                    <div style="font-size: 2.2rem; font-weight: bold;">${estadisticas.picoPrecipitacion} mm</div>
-                    <div style="font-size: 0.8rem; opacity: 0.9; margin-top: 0.5rem;">
-                        Prob. Máxima: ${estadisticas.probabilidadMaxima}%
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-3 mt-3">
-            <div class="col-12 col-md-6">
-                <div class="card p-3" style="border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); background: white;">
-                    <h5 class="mb-3" style="color: #1a2a6c; font-weight: bold;"><i class="fas fa-cloud-showers-heavy"></i> Detalle Hídrico (Semanal)</h5>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span>Total Lluvia</span>
-                        <span class="badge badge-primary badge-pill" style="font-size: 1rem;">${estadisticas.totalLluvia} mm</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span>Total Nieve</span>
-                        <span class="badge badge-info badge-pill" style="font-size: 1rem;">${estadisticas.totalNieve} cm</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span>Pico Diario</span>
-                        <span class="badge badge-warning badge-pill" style="font-size: 1rem;">${estadisticas.picoPrecipitacion} mm</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6">
-                <div class="card p-3" style="border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); background: white;">
-                    <h5 class="mb-3" style="color: #1a2a6c; font-weight: bold;"><i class="fas fa-calendar-check"></i> Mix de Días</h5>
-                    <div class="row">
-    `;
-
-    Object.entries(estadisticas.diasPorEstado).forEach(([tipo, cantidad]) => {
-        if (cantidad > 0) {
-            html += `
-                <div class="col-6 mb-2">
-                    <div style="padding: 10px; border-radius: 8px; background: #f8f9fa; text-align: center;">
-                        <strong style="color: #764ba2; font-size: 1.2rem;">${cantidad}</strong>
-                        <div style="font-size: 0.75rem; color: #666;">${tipo}</div>
-                    </div>
-                </div>
-            `;
-        }
-    });
-
-    html += `
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        ${estadisticas.resumen ? `
-        <div class="alert mt-4" style="border-radius: 12px; background: #e3f2fd; border: none; border-left: 5px solid #2196f3; padding: 1.5rem;">
-            <h5 style="color: #0d47a1; font-weight: bold;"><i class="fas fa-robot"></i> Análisis del Generador</h5>
-            <p class="mb-0" style="font-size: 1.05rem;">${estadisticas.resumen}</p>
-        </div>
-        ` : ''}
-    `;
-
-    container.innerHTML = html;
 }
 
 /**
@@ -1100,15 +1003,15 @@ function renderForecastChart(city) {
     // Filtrar solo días futuros para el gráfico
     const ahora = new Date();
     ahora.setHours(0, 0, 0, 0);
-
+    
     const labels = [];
     const tempsMax = [];
     const tempsMin = [];
-
+    
     daily.time.forEach((t, index) => {
         const date = new Date(t);
         date.setHours(0, 0, 0, 0);
-
+        
         // Solo incluir días futuros
         if (date > ahora) {
             labels.push(date.toLocaleDateString('es-CL', { weekday: 'short', day: 'numeric' }));
@@ -1116,7 +1019,7 @@ function renderForecastChart(city) {
             tempsMin.push(daily.temperature_2m_min?.[index] || 0);
         }
     });
-
+    
     if (labels.length === 0) {
         console.error(`❌ No hay días futuros para mostrar en el gráfico de ${city}`);
         return;
@@ -1253,13 +1156,13 @@ async function renderAlerts() {
         const alertasPorDia = await weatherApp.obtenerAlertasPorDiaYLugar();
 
         if (!alertasPorDia || alertasPorDia.length === 0) {
-            container.innerHTML = `
+        container.innerHTML = `
             <div class="alert alert-success text-center">
                     <i class="fas fa-check-circle"></i> No hay alertas meteorológicas activas para los circuitos W y O.
             </div>
         `;
-            return;
-        }
+        return;
+    }
 
         let html = `
             <h4 class="mb-3">
@@ -1278,7 +1181,7 @@ async function renderAlerts() {
             const alertasW = diaData.alertas.filter(a => a.circuito === 'W');
             const alertasO = diaData.alertas.filter(a => a.circuito === 'O');
 
-            html += `
+        html += `
                 <div class="card mb-4" style="border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                     <div class="card-header" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; border-radius: 10px 10px 0 0;">
                         <h5 class="mb-0">
@@ -1317,9 +1220,9 @@ async function renderAlerts() {
                                         <i class="fas ${primeraAlerta.icono}"></i> ${sector}
                                     </h6>
                                     ${alertasSector.map(alerta => {
-                        const nivelClass = alerta.nivel === 'danger' ? 'danger' :
-                            alerta.nivel === 'warning' ? 'warning' : 'info';
-                        return `
+                                        const nivelClass = alerta.nivel === 'danger' ? 'danger' : 
+                                                         alerta.nivel === 'warning' ? 'warning' : 'info';
+                                        return `
                                             <div class="alert alert-${nivelClass} mb-2 p-2" style="font-size: 0.9rem;">
                                                 <strong>${alerta.titulo}</strong><br>
                                                 <small>${alerta.mensaje}</small><br>
@@ -1335,12 +1238,12 @@ async function renderAlerts() {
                                                 </div>
                                             </div>
                                         `;
-                    }).join('')}
+                                    }).join('')}
                                 </div>
                             </div>
             </div>
         `;
-                });
+    });
 
                 html += `</div></div>`;
             }
@@ -1374,9 +1277,9 @@ async function renderAlerts() {
                                         <i class="fas ${primeraAlerta.icono}"></i> ${sector}
                                     </h6>
                                     ${alertasSector.map(alerta => {
-                        const nivelClass = alerta.nivel === 'danger' ? 'danger' :
-                            alerta.nivel === 'warning' ? 'warning' : 'info';
-                        return `
+                                        const nivelClass = alerta.nivel === 'danger' ? 'danger' : 
+                                                         alerta.nivel === 'warning' ? 'warning' : 'info';
+                                        return `
                                             <div class="alert alert-${nivelClass} mb-2 p-2" style="font-size: 0.9rem;">
                                                 <strong>${alerta.titulo}</strong><br>
                                                 <small>${alerta.mensaje}</small><br>
@@ -1392,7 +1295,7 @@ async function renderAlerts() {
                                                 </div>
                                             </div>
                                         `;
-                    }).join('')}
+                                    }).join('')}
                                 </div>
                             </div>
                         </div>
@@ -1405,7 +1308,7 @@ async function renderAlerts() {
             html += `</div></div>`;
         });
 
-        container.innerHTML = html;
+    container.innerHTML = html;
     } catch (error) {
         console.error('Error generando alertas por día y sector:', error);
         container.innerHTML = `
@@ -1447,13 +1350,13 @@ async function showDetail(city) {
 
     // Calcular estadísticas desde datos de la API
     const estadisticas = weatherApp.calcularEstadisticas(city);
-
+    
     if (estadisticas) {
         console.log(`📊 Estadísticas para ${city}:`, estadisticas);
     }
 
     // Obtener alertas de clima (solo para Torres del Paine)
-    const alertas = city === 'Torres del Paine - Glaciar Grey'
+    const alertas = city === 'Torres del Paine - Glaciar Grey' 
         ? await weatherApp.obtenerAlertas(city)
         : [];
 
@@ -1472,7 +1375,7 @@ async function showDetail(city) {
                 <div class="detail-item">
                     <div class="detail-item__label">Temperatura</div>
                     <div class="detail-item__value">${Math.round(current.temperature_2m)}°C</div>
-                    <small class="text-muted">Sensación: ${Math.round(current.apparent_temperature || current.temperature_2m)}°C</small>
+                    <small class="text-muted">Valor exacto: ${current.temperature_2m.toFixed(1)}°C</small>
                 </div>
                 <div class="detail-item">
                     <div class="detail-item__label">Humedad</div>
@@ -1481,23 +1384,23 @@ async function showDetail(city) {
                 <div class="detail-item">
                     <div class="detail-item__label">Viento</div>
                     <div class="detail-item__value">${Math.round(current.wind_speed_10m)} km/h</div>
-                    <small class="text-muted">${weatherApp.obtenerDireccionViento(current.wind_direction_10m)}</small>
+                    <small class="text-muted">Valor exacto: ${current.wind_speed_10m.toFixed(1)} km/h</small>
                 </div>
                 <div class="detail-item">
-                    <div class="detail-item__label">Lluvia Prox.</div>
-                    <div class="detail-item__value">${(daily.precipitation_sum?.[0] || 0).toFixed(1)}mm</div>
-                    <small class="text-muted">Prob: ${daily.precipitation_probability_max?.[0] || 0}%</small>
+                    <div class="detail-item__label">Dirección</div>
+                    <div class="detail-item__value">${Math.round(current.wind_direction_10m)}°</div>
+                    <small class="text-muted">${weatherApp.obtenerDireccionViento(current.wind_direction_10m)}</small>
                 </div>
             </div>
         </div>
     `;
-
+        
     // Sección de Alertas de Clima
     if (alertas && alertas.length > 0) {
         html += `
         <div class="forecast-section">
             <h3 class="forecast-title">
-                    <i class="fas fa-exclamation-triangle"></i> Alertas Inteligentes (Análisis IA local)
+                    <i class="fas fa-exclamation-triangle"></i> Alertas de Clima
                 </h3>
                 <div id="weatherAlertsDetail">
                     ${weatherApp.weatherAlerts.renderizarAlertas(alertas)}
@@ -1518,17 +1421,17 @@ async function showDetail(city) {
     // Filtrar solo días futuros (pronóstico real, no histórico)
     const ahora = new Date();
     ahora.setHours(0, 0, 0, 0);
-
+    
     let diasMostrados = 0;
     for (let i = 0; i < daily.time.length; i++) {
         const date = new Date(daily.time[i]);
         date.setHours(0, 0, 0, 0);
-
+        
         // Solo mostrar días futuros (mañana en adelante)
         if (date <= ahora) {
             continue; // Saltar días pasados o el día actual
         }
-
+        
         const dateStr = date.toLocaleDateString('es-CL', {
             weekday: 'short',
             month: 'short',
@@ -1578,28 +1481,22 @@ async function showDetail(city) {
                     <i class="fas fa-chart-bar"></i> Estadísticas de la Semana
                 </h3>
                 <div class="row g-3">
-                    <div class="col-12 col-md-3">
-                        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; padding: 1.25rem; text-align: center;">
-                            <h4 style="font-size: 0.8rem; opacity: 0.9; margin-bottom: 0.5rem; text-transform: uppercase;">Promedio Real</h4>
-                            <div style="font-size: 1.8rem; font-weight: bold;">${estadisticas.tempPromedio}°C</div>
+                    <div class="col-12 col-md-4">
+                        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                            <h4 style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Temperatura Mínima</h4>
+                            <div style="font-size: 2.5rem; font-weight: bold;">${estadisticas.tempMinima}°C</div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-3">
-                        <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 12px; padding: 1.25rem; text-align: center;">
-                            <h4 style="font-size: 0.8rem; opacity: 0.9; margin-bottom: 0.5rem; text-transform: uppercase;">Sensación Térmica</h4>
-                            <div style="font-size: 1.8rem; font-weight: bold;">${estadisticas.sensacionPromedio}°C</div>
+                    <div class="col-12 col-md-4">
+                        <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                            <h4 style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Temperatura Máxima</h4>
+                            <div style="font-size: 2.5rem; font-weight: bold;">${estadisticas.tempMaxima}°C</div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-3">
-                        <div class="card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border-radius: 12px; padding: 1.25rem; text-align: center;">
-                            <h4 style="font-size: 0.8rem; opacity: 0.9; margin-bottom: 0.5rem; text-transform: uppercase;">Total Lluvia</h4>
-                            <div style="font-size: 1.8rem; font-weight: bold;">${estadisticas.totalLluvia} mm</div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3">
-                        <div class="card" style="background: linear-gradient(135deg, #13f1fc 0%, #0470dc 100%); color: white; border-radius: 12px; padding: 1.25rem; text-align: center;">
-                            <h4 style="font-size: 0.8rem; opacity: 0.9; margin-bottom: 0.5rem; text-transform: uppercase;">Total Nieve</h4>
-                            <div style="font-size: 1.8rem; font-weight: bold;">${estadisticas.totalNieve} cm</div>
+                    <div class="col-12 col-md-4">
+                        <div class="card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                            <h4 style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Temperatura Promedio</h4>
+                            <div style="font-size: 2.5rem; font-weight: bold;">${estadisticas.tempPromedio}°C</div>
                         </div>
                     </div>
                 </div>
@@ -1732,7 +1629,7 @@ async function showDetail(city) {
         // Dividir en histórico y pronóstico
         const hoy = new Date();
         hoy.setHours(0, 0, 0, 0);
-
+        
         let indiceHoy = -1;
         for (let i = 0; i < data.daily.time.length; i++) {
             const fecha = new Date(data.daily.time[i]);
@@ -1748,7 +1645,7 @@ async function showDetail(city) {
             const tempPromedioHistorica = data.daily.temperature_2m_max
                 .slice(0, indiceHoy)
                 .reduce((sum, temp) => sum + temp, 0) / diasHistoricos;
-
+            
             html += `
                 <div class="forecast-section" style="margin-top: 2rem;">
                     <h3 class="forecast-title">
@@ -1840,13 +1737,13 @@ function mostrarMensajeError(mensaje) {
 function renderHourlyChart(city, data) {
     console.log(`🔍 renderHourlyChart llamado para ${city}`);
     console.log(`📦 Datos recibidos:`, { hasHourly: !!data?.hourly, hourlyLength: data?.hourly?.time?.length });
-
+    
     const canvasId = `hourlyChart_${city.replace(/\s+/g, '_')}`;
     console.log(`🔍 Buscando canvas con ID: ${canvasId}`);
-
+    
     const canvasElement = document.getElementById(canvasId);
     if (!canvasElement) {
-        console.error(`❌ No se encontró el elemento canvas #${canvasId}. Elementos disponibles:`,
+        console.error(`❌ No se encontró el elemento canvas #${canvasId}. Elementos disponibles:`, 
             Array.from(document.querySelectorAll('canvas')).map(c => c.id));
         return;
     }
@@ -1866,12 +1763,12 @@ function renderHourlyChart(city, data) {
     const ahora = new Date();
     const horaActual = ahora.getHours();
     const minutoActual = ahora.getMinutes();
-
+    
     // Los datos horarios de la API ya vienen en 'America/Santiago' 
     // y comienzan desde la hora actual (próxima hora completa)
     // Tomar las próximas 24 horas directamente desde el inicio
     const horas24 = data.hourly.time.slice(0, 24);
-
+    
     if (horas24.length === 0) {
         console.error(`❌ No hay datos horarios suficientes`);
         canvasElement.parentElement.innerHTML = '<div class="alert alert-info">No hay datos horarios disponibles.</div>';
@@ -1879,27 +1776,27 @@ function renderHourlyChart(city, data) {
     }
 
     console.log(`📊 Usando ${horas24.length} horas de pronóstico horario`);
-
+    
     // Crear labels y datos para las próximas 24 horas
     const labels = [];
     const temperaturas = [];
     const precipitacion = [];
-
+    
     for (let i = 0; i < horas24.length; i++) {
         const timestamp = horas24[i];
         const fechaHora = new Date(timestamp);
-
+        
         // Formatear hora para mostrar
         const hora = fechaHora.getHours();
         const minuto = fechaHora.getMinutes();
         const horaFormateada = `${String(hora).padStart(2, '0')}:${String(minuto).padStart(2, '0')}`;
-
+        
         labels.push(horaFormateada);
-
+        
         // Obtener temperatura y precipitación del índice correspondiente
         const temp = data.hourly.temperature_2m?.[i];
         const prec = data.hourly.precipitation?.[i];
-
+        
         temperaturas.push(temp ? Math.round(temp) : 0);
         precipitacion.push(prec && prec > 0 ? parseFloat(prec.toFixed(1)) : 0);
     }
@@ -1992,7 +1889,7 @@ function renderHourlyChart(city, data) {
                         color: '#ff9800'
                     },
                     ticks: {
-                        callback: function (value) {
+                        callback: function(value) {
                             return value + '°C';
                         }
                     },
@@ -2009,7 +1906,7 @@ function renderHourlyChart(city, data) {
                         color: '#2196f3'
                     },
                     ticks: {
-                        callback: function (value) {
+                        callback: function(value) {
                             return value + 'mm';
                         }
                     },
@@ -2040,7 +1937,7 @@ function renderHistoricalChart(city, data) {
 
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
-
+    
     let indiceHoy = -1;
     for (let i = 0; i < data.daily.time.length; i++) {
         const fecha = new Date(data.daily.time[i]);
@@ -2118,7 +2015,7 @@ function renderHistoricalChart(city, data) {
                         text: 'Temperatura (°C)'
                     },
                     ticks: {
-                        callback: function (value) {
+                        callback: function(value) {
                             return value + '°C';
                         }
                     }
@@ -2137,7 +2034,7 @@ function renderHistoricalChart(city, data) {
     const chartInstance = window[chartKey];
     if (chartInstance && chartInstance.chart && indiceHoy >= 0) {
         const originalDraw = chartInstance.draw;
-        chartInstance.draw = function () {
+        chartInstance.draw = function() {
             originalDraw.apply(this, arguments);
             const meta = this.getDatasetMeta(0);
             if (meta && meta.data[indiceHoy]) {
@@ -2380,7 +2277,7 @@ async function showTorresDetail() {
         setTimeout(async () => {
             await initializeTorresMap();
             torresMapInitialized = true;
-
+            
             // Asegurar que el tamaño del mapa sea correcto
             setTimeout(() => {
                 if (torresMap) {
@@ -2410,7 +2307,7 @@ async function showTorresDetail() {
  */
 async function initializeTorresMap() {
     console.log('🗺️ Inicializando mapa de Torres del Paine...');
-
+    
     const container = document.getElementById('torresMapContainer');
     if (!container) {
         console.error('❌ Contenedor del mapa no encontrado');
@@ -2433,7 +2330,7 @@ async function initializeTorresMap() {
         if (typeof loadTorresPaineGPXTrails !== 'undefined') {
             const gpxTrails = await loadTorresPaineGPXTrails(torresMap);
             console.log('✅ Senderos GPX reales cargados');
-
+            
             // Guardar referencias para control de visibilidad
             if (!window.torresMapLayerGroups) {
                 window.torresMapLayerGroups = {
@@ -2448,7 +2345,7 @@ async function initializeTorresMap() {
                     rutaConexion: null
                 };
             }
-
+            
             // Actualizar referencias con senderos GPX reales
             if (gpxTrails.circuitoW) {
                 window.torresMapLayerGroups.circuitoW = gpxTrails.circuitoW;
@@ -2465,10 +2362,10 @@ async function initializeTorresMap() {
         // Fallback: dibujar rutas aproximadas si no se pueden cargar los GPX
         dibujarRutasCircuitos();
     }
-
+    
     // Agregar sectores y puntos de interés
     agregarSectoresYInteres();
-
+    
     console.log('✅ Mapa de Torres del Paine inicializado completamente');
 
     // Agregar polígono aproximado del área del Parque Nacional Torres del Paine
@@ -2509,7 +2406,7 @@ async function initializeTorresMap() {
 
     // Agregar leyenda al mapa (ajustada para no sobrepasar) - INTERACTIVA
     const leyenda = L.control({ position: 'bottomright' });
-    leyenda.onAdd = function () {
+    leyenda.onAdd = function() {
         const div = L.DomUtil.create('div', 'torres-map-legend');
         // Evitar que sobrepase el mapa
         div.style.maxHeight = 'calc(100vh - 300px)';
@@ -2586,45 +2483,45 @@ async function initializeTorresMap() {
                 </small>
             </div>
         `;
-
+        
         // Agregar eventos de click a cada elemento clickeable
         L.DomEvent.disableClickPropagation(div);
-
+        
         const clickableItems = div.querySelectorAll('.clickable-legend-item');
         clickableItems.forEach(item => {
             // Efecto hover
-            item.addEventListener('mouseenter', function () {
+            item.addEventListener('mouseenter', function() {
                 this.style.background = 'rgba(30, 60, 114, 0.1)';
                 const btn = this.querySelector('.legend-action-btn');
                 if (btn) btn.style.display = 'block';
             });
-
-            item.addEventListener('mouseleave', function () {
+            
+            item.addEventListener('mouseleave', function() {
                 this.style.background = '';
                 const btn = this.querySelector('.legend-action-btn');
                 if (btn && !btn.classList.contains('active')) {
                     btn.style.display = 'none';
                 }
             });
-
+            
             // Click para crear/activar botones
-            item.addEventListener('click', function (e) {
+            item.addEventListener('click', function(e) {
                 e.stopPropagation();
                 const type = this.getAttribute('data-type');
                 toggleLegendItemActions(type, this);
             });
-
+            
             // Prevenir click en el botón de propagar
             const btn = item.querySelector('.legend-action-btn');
             if (btn) {
-                btn.addEventListener('click', function (e) {
+                btn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const type = item.getAttribute('data-type');
                     toggleLegendItemActions(type, item);
                 });
             }
         });
-
+        
         return div;
     };
     leyenda.addTo(torresMap);
@@ -2650,7 +2547,7 @@ async function initializeTorresMap() {
     setTimeout(() => {
         torresMap.invalidateSize();
     }, 100);
-
+    
     // Inicializar capas para control de visibilidad
     if (!window.torresMapLayers) {
         window.torresMapLayers = {
@@ -2672,13 +2569,13 @@ async function initializeTorresMap() {
  */
 function toggleLegendItemActions(type, itemElement) {
     if (!itemElement) return;
-
+    
     const btn = itemElement.querySelector('.legend-action-btn');
     if (!btn) return;
-
+    
     // Si ya hay botones creados, mostrarlos/ocultarlos
     let actionButtons = itemElement.querySelector('.legend-action-buttons');
-
+    
     if (actionButtons && actionButtons.style.display !== 'none') {
         // Ocultar botones existentes
         actionButtons.style.display = 'none';
@@ -2692,23 +2589,23 @@ function toggleLegendItemActions(type, itemElement) {
             actionButtons.style.cssText = 'margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd; display: flex; gap: 5px; flex-wrap: wrap;';
             itemElement.appendChild(actionButtons);
         }
-
+        
         // Crear botones según el tipo
         actionButtons.innerHTML = '';
-
+        
         const buttons = getActionButtonsForType(type);
         buttons.forEach(buttonConfig => {
             const actionBtn = document.createElement('button');
             actionBtn.className = `btn btn-sm ${buttonConfig.class}`;
             actionBtn.innerHTML = `<i class="${buttonConfig.icon}"></i> ${buttonConfig.text}`;
             actionBtn.style.cssText = 'padding: 4px 10px; font-size: 0.8rem; flex: 1 1 auto;';
-            actionBtn.addEventListener('click', function (e) {
+            actionBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 buttonConfig.action(type, itemElement);
             });
             actionButtons.appendChild(actionBtn);
         });
-
+        
         actionButtons.style.display = 'flex';
         btn.classList.add('active');
         btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
@@ -2738,7 +2635,7 @@ function getActionButtonsForType(type) {
             }
         }
     ];
-
+    
     const typeSpecificButtons = {
         'park': [
             {
@@ -2830,7 +2727,7 @@ function getActionButtonsForType(type) {
             }
         ]
     };
-
+    
     return [...commonButtons, ...(typeSpecificButtons[type] || [])];
 }
 
@@ -2853,7 +2750,7 @@ function getLegendItemName(type) {
 
 function focusOnLegendItem(type) {
     if (!torresMap) return;
-
+    
     // Definir bounds según el tipo
     const bounds = {
         'park': [[-50.75, -73.35], [-51.25, -72.80]],
@@ -2862,7 +2759,7 @@ function focusOnLegendItem(type) {
         'sectores-w': [[-50.95, -73.25], [-51.05, -73.05]],
         'sectores-o': [[-50.90, -73.30], [-51.15, -72.90]]
     };
-
+    
     if (bounds[type]) {
         torresMap.fitBounds(bounds[type], { padding: [50, 50] });
     }
@@ -2876,16 +2773,16 @@ function showLegendItemInfo(type) {
         'sectores-w': 'Sectores principales del Circuito W: Grey, Paine Grande, Francés, y Torres.',
         'sectores-o': 'Sectores principales del Circuito O: incluye todos los del W más Dickson, Los Perros, y Paso John Gardner.'
     };
-
+    
     const message = info[type] || `Información sobre ${getLegendItemName(type)}`;
     alert(message);
 }
 
 function toggleLayerVisibility(layerType) {
     if (!window.torresMapLayers) return;
-
+    
     window.torresMapLayers[layerType] = !window.torresMapLayers[layerType];
-
+    
     // Implementar lógica para mostrar/ocultar capas en el mapa
     // Esto requeriría guardar referencias a las capas cuando se crean
     console.log(`Toggle layer ${layerType}: ${window.torresMapLayers[layerType]}`);
@@ -2893,7 +2790,7 @@ function toggleLayerVisibility(layerType) {
 
 function showOnlyCircuit(circuit) {
     if (!torresMap) return;
-
+    
     // Mostrar solo el circuito especificado
     mostrarMensajeExito(`Mostrando solo Circuito ${circuit}`);
     console.log(`Mostrar solo Circuito ${circuit}`);
@@ -2901,7 +2798,7 @@ function showOnlyCircuit(circuit) {
 
 function filterMarkersByType(type) {
     if (!torresMap) return;
-
+    
     // Filtrar marcadores por tipo
     mostrarMensajeExito(`Filtrando ${getLegendItemName(type)}`);
     console.log(`Filtrar marcadores: ${type}`);
@@ -2919,7 +2816,7 @@ function dibujarRutasCircuitos() {
 
     // Definir rutas más precisas basadas en coordenadas reales del parque
     // Ajustadas a la topografía real: siguen valles, evitan lagos/glaciares, pasan por senderos reales
-
+    
     // Circuito W - forma de W más precisa siguiendo topografía real
     // Oeste a Este, siguiendo valles y senderos marcados
     const rutaCircuitoW = [
@@ -2964,7 +2861,7 @@ function dibujarRutasCircuitos() {
         [-50.90, -73.19],        // Aproximación Grey (valle)
         [-50.95, -73.21],        // Aproximación refugio Grey (valle)
         [-51.0, -73.23],         // Refugio Grey (lago Grey, oeste)
-
+        
         // Oeste a Este (comparte ruta con Circuito W)
         [-50.98, -73.20],        // Borde sur lago Grey
         [-50.97, -73.17],        // Valle hacia Paine Grande
@@ -3008,7 +2905,7 @@ function dibujarRutasCircuitos() {
             rutaConexion: null
         };
     }
-
+    
     // Dibujar Circuito W (naranja) - ajustado topográficamente
     // Guardar referencia para control de visibilidad
     // Usar smoothFactor más bajo para seguir mejor la topografía
@@ -3117,11 +3014,11 @@ function agregarSectoresYInteres() {
             puntosFoto: []
         };
     }
-
+    
     // Agregar sectores
     Object.entries(sectores).forEach(([nombre, sector]) => {
         const color = sector.circuito === "W" ? "#ff9800" : "#ffc107";
-
+        
         const marker = L.marker([sector.lat, sector.lon], {
             icon: L.divIcon({
                 className: 'sector-marker',
@@ -3146,7 +3043,7 @@ function agregarSectoresYInteres() {
                 iconAnchor: [15, 15]
             })
         });
-
+        
         // Guardar referencia según el circuito
         if (sector.circuito === "W") {
             window.torresStaticMarkers.sectoresW.push(marker);
@@ -3155,7 +3052,7 @@ function agregarSectoresYInteres() {
             window.torresStaticMarkers.sectoresO.push(marker);
             window.torresMapLayerGroups.sectoresO.addLayer(marker);
         }
-
+        
         marker.addTo(torresMap);
 
         // Crear HTML de servicios
@@ -3216,10 +3113,10 @@ function agregarSectoresYInteres() {
                     </div>
                 `,
                 iconSize: [size, size],
-                iconAnchor: [size / 2, size / 2]
+                iconAnchor: [size/2, size/2]
             })
         });
-
+        
         // Guardar referencia según el tipo
         if (punto.destacado) {
             window.torresStaticMarkers.puntosDestacados.push(marker);
@@ -3229,7 +3126,7 @@ function agregarSectoresYInteres() {
             window.torresStaticMarkers.puntosFoto.push(marker);
             window.torresMapLayerGroups.puntosFoto.addLayer(marker);
         }
-
+        
         marker.addTo(torresMap);
 
         const serviciosHTML = punto.servicios ? punto.servicios.map(serv => {
@@ -3288,11 +3185,11 @@ function agregarSectoresYInteres() {
                 iconAnchor: [12.5, 12.5]
             })
         });
-
+        
         // Guardar referencia
         window.torresStaticMarkers.puntosFoto.push(marker);
         window.torresMapLayerGroups.puntosFoto.addLayer(marker);
-
+        
         marker.addTo(torresMap).bindPopup(`
             <div style="text-align: center;">
                 <i class="fas fa-camera" style="color: #4caf50; font-size: 1.5rem;"></i><br>
@@ -3365,7 +3262,7 @@ function renderTorresLugarCard(lugar, container) {
     const estado = lugar.estadoActual.toLowerCase();
     let modifier = 'cloudy';
     let iconClass = 'fa-cloud';
-
+    
     if (estado.includes('soleado')) {
         modifier = 'sunny';
         iconClass = 'fa-sun';
@@ -3384,36 +3281,36 @@ function renderTorresLugarCard(lugar, container) {
     const altitud = lugar.altitud || 500;
 
     // Calcular sensación térmica
-    const sensacionTermica = typeof calcularSensacionTermica === 'function'
-        ? calcularSensacionTermica(lugar.tempActual, viento)
+    const sensacionTermica = typeof calcularSensacionTermica === 'function' 
+        ? calcularSensacionTermica(lugar.tempActual, viento) 
         : lugar.tempActual;
 
     // Calcular índice UV
-    const indiceUV = typeof calcularIndiceUV === 'function'
-        ? calcularIndiceUV(lugar.estadoActual, lugar.tempActual)
+    const indiceUV = typeof calcularIndiceUV === 'function' 
+        ? calcularIndiceUV(lugar.estadoActual, lugar.tempActual) 
         : 3;
-    const infoUV = typeof obtenerDescripcionUV === 'function'
-        ? obtenerDescripcionUV(indiceUV)
+    const infoUV = typeof obtenerDescripcionUV === 'function' 
+        ? obtenerDescripcionUV(indiceUV) 
         : { nivel: 'Moderado', color: '#ffc107' };
 
     // Evaluar viento
-    const infoViento = typeof evaluarViento === 'function'
-        ? evaluarViento(viento)
+    const infoViento = typeof evaluarViento === 'function' 
+        ? evaluarViento(viento) 
         : { nivel: 'Moderado', icon: 'fa-wind', color: '#ffc107' };
 
     // Evaluar visibilidad
-    const infoVisibilidad = typeof evaluarVisibilidad === 'function'
-        ? evaluarVisibilidad(lugar.estadoActual, humedad)
+    const infoVisibilidad = typeof evaluarVisibilidad === 'function' 
+        ? evaluarVisibilidad(lugar.estadoActual, humedad) 
         : { valor: 'Moderada', icon: 'fa-eye', color: '#ff9800', km: '5-15 km' };
 
     // Probabilidad de precipitación
-    const probPrecipitacion = typeof calcularProbabilidadPrecipitacion === 'function'
-        ? calcularProbabilidadPrecipitacion(lugar.estadoActual)
+    const probPrecipitacion = typeof calcularProbabilidadPrecipitacion === 'function' 
+        ? calcularProbabilidadPrecipitacion(lugar.estadoActual) 
         : 30;
 
     // Dirección del viento
-    const dirViento = typeof obtenerDireccionViento === 'function'
-        ? obtenerDireccionViento(direccionViento)
+    const dirViento = typeof obtenerDireccionViento === 'function' 
+        ? obtenerDireccionViento(direccionViento) 
         : 'S';
 
     const cardHtml = `
@@ -3585,8 +3482,8 @@ function addTorresLugarMarker(lugar) {
     // Calcular sensación térmica y otras variables
     const viento = lugar.viento || 20;
     const humedad = lugar.humedad || 70;
-    const sensacionTermica = typeof calcularSensacionTermica === 'function'
-        ? calcularSensacionTermica(temp, viento)
+    const sensacionTermica = typeof calcularSensacionTermica === 'function' 
+        ? calcularSensacionTermica(temp, viento) 
         : temp;
 
     // Obtener pronóstico semanal
@@ -3600,9 +3497,9 @@ function addTorresLugarMarker(lugar) {
         </div>
                 <div style="display: flex; justify-content: space-around; gap: 8px;">
                     ${proximosDias.map(dia => {
-            const diaIcon = dia.estado.toLowerCase().includes('soleado') ? 'fa-sun' :
-                dia.estado.toLowerCase().includes('lluvioso') ? 'fa-cloud-rain' : 'fa-cloud';
-            return `
+                        const diaIcon = dia.estado.toLowerCase().includes('soleado') ? 'fa-sun' :
+                                       dia.estado.toLowerCase().includes('lluvioso') ? 'fa-cloud-rain' : 'fa-cloud';
+                        return `
                             <div style="text-align: center; flex: 1; padding: 8px; background: #f9f9f9; border-radius: 6px;">
                                 <div style="font-size: 0.8rem; color: #666; margin-bottom: 4px;">${dia.dia}</div>
                                 <i class="fas ${diaIcon}" style="color: #ff9800; font-size: 1.2rem; margin: 4px 0;"></i>
@@ -3612,7 +3509,7 @@ function addTorresLugarMarker(lugar) {
                                 </div>
                             </div>
                         `;
-        }).join('')}
+                    }).join('')}
                 </div>
             </div>
         `;
@@ -3709,7 +3606,7 @@ function addTorresLugarMarker(lugar) {
     });
 
     // Agregar evento de clic
-    marker.on('click', function () {
+    marker.on('click', function() {
         marker.openPopup();
     });
 
@@ -3747,8 +3644,8 @@ function addTorresMapMarker(pointData) {
     const feelsLike = Math.round(current.apparent_temperature || temp);
     const humidity = current.relative_humidity_2m || 'N/A';
     const windSpeed = Math.round(current.wind_speed_10m || 0);
-    const windDir = current.wind_direction_10m !== undefined
-        ? weatherApp.obtenerDireccionViento(current.wind_direction_10m)
+    const windDir = current.wind_direction_10m !== undefined 
+        ? weatherApp.obtenerDireccionViento(current.wind_direction_10m) 
         : 'N/A';
     const precipitation = (current.precipitation || 0).toFixed(1);
     const weatherDesc = weatherApp.obtenerDescripcionClima(current.weather_code || 0);
@@ -3764,7 +3661,7 @@ function addTorresMapMarker(pointData) {
             const tempMin = Math.round(daily.temperature_2m_min?.[i] || temp);
             const dayCode = daily.weather_code?.[i] || 0;
             const dayIcon = weatherApp.obtenerIconoClima(dayCode);
-
+            
             nextDays.push({
                 date: date.toLocaleDateString('es-CL', { weekday: 'short', day: 'numeric' }),
                 tempMax,
@@ -3860,7 +3757,7 @@ function addTorresMapMarker(pointData) {
     });
 
     // Agregar evento para hacer el popup más grande al hacer clic
-    marker.on('click', function () {
+    marker.on('click', function() {
         marker.openPopup();
     });
 }
@@ -3871,7 +3768,7 @@ function addTorresMapMarker(pointData) {
  */
 function setupTorresCardNavigation() {
     const torresCards = document.querySelectorAll('.torres-lugar-card');
-
+    
     torresCards.forEach(function (card) {
         card.addEventListener('click', function () {
             const lugarId = parseInt(this.getAttribute('data-lugar-id'));
@@ -3904,31 +3801,31 @@ function renderFreezingLevelChart() {
     let tempVariation = []; // Para mostrar variación en el pronóstico
 
     const torresData = weatherApp.obtenerDatosClima('Torres del Paine - Glaciar Grey');
-
+    
     if (torresData && torresData.current) {
         // Usar temperatura actual de la API
         avgTemp = torresData.current.temperature_2m;
-
+        
         // Calcular nivel de congelación actual
         const baseAltitude = 100;
         freezingLevel = weatherApp.calcularNivelCongelacion(avgTemp, baseAltitude);
-
+        
         // Calcular variación del nivel de congelación para los próximos 7 días
         if (torresData.daily && torresData.daily.temperature_2m_max) {
             const tempsPromedio = torresData.daily.temperature_2m_max.map((max, i) => {
                 const min = torresData.daily.temperature_2m_min[i];
                 return (max + min) / 2; // Temperatura promedio del día
             });
-
+            
             tempVariation = tempsPromedio.map(temp => {
                 return weatherApp.calcularNivelCongelacion(temp, baseAltitude);
             });
         }
     } else {
         // Fallback: usar datos estáticos si no hay datos de API
-        if (lugares && lugares.length > 0) {
-            const sumaTemps = lugares.reduce((sum, lugar) => sum + lugar.tempActual, 0);
-            avgTemp = sumaTemps / lugares.length;
+    if (lugares && lugares.length > 0) {
+        const sumaTemps = lugares.reduce((sum, lugar) => sum + lugar.tempActual, 0);
+        avgTemp = sumaTemps / lugares.length;
             const baseAltitude = 100;
             freezingLevel = weatherApp.calcularNivelCongelacion(avgTemp, baseAltitude);
         }
@@ -3967,31 +3864,31 @@ function renderFreezingLevelChart() {
 
     // Preparar datasets del gráfico
     const datasets = [
-        {
-            label: 'Perfil de Montaña',
-            data: mountainData,
-            backgroundColor: 'rgba(139, 115, 85, 0.7)',
-            borderColor: 'rgba(101, 67, 33, 1)',
-            borderWidth: 2,
-            fill: 'origin',
-            pointRadius: 0,
-            tension: 0.4
-        },
-        {
+                {
+                    label: 'Perfil de Montaña',
+                    data: mountainData,
+                    backgroundColor: 'rgba(139, 115, 85, 0.7)',
+                    borderColor: 'rgba(101, 67, 33, 1)',
+                    borderWidth: 2,
+                    fill: 'origin',
+                    pointRadius: 0,
+                    tension: 0.4
+                },
+                {
             label: `Isoterma 0°C Actual (${freezingLevel}m)`,
-            data: Array(labels.length).fill(freezingLevel),
-            borderColor: '#dc3545',
-            backgroundColor: 'rgba(220, 53, 69, 0.2)',
-            borderWidth: 4,
-            borderDash: [10, 5],
-            fill: {
-                target: 'origin',
-                above: 'rgba(220, 53, 69, 0.1)'
-            },
-            pointRadius: 0,
+                    data: Array(labels.length).fill(freezingLevel),
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220, 53, 69, 0.2)',
+                    borderWidth: 4,
+                    borderDash: [10, 5],
+                    fill: {
+                        target: 'origin',
+                        above: 'rgba(220, 53, 69, 0.1)'
+                    },
+                    pointRadius: 0,
             order: 0,
-            tension: 0
-        }
+                    tension: 0
+                }
     ];
 
     // Si hay datos de pronóstico, agregar línea de variación promedio
@@ -4036,7 +3933,7 @@ function renderFreezingLevelChart() {
                 },
                 title: {
                     display: true,
-                    text: torresData
+                    text: torresData 
                         ? `🌡️ Temperatura actual: ${Math.round(avgTemp)}°C | Isoterma 0°C a ${freezingLevel}m (Datos en tiempo real)`
                         : `🌡️ Temperatura: ${Math.round(avgTemp)}°C | Isoterma 0°C a ${freezingLevel}m`,
                     font: { size: 14, weight: 'bold' },

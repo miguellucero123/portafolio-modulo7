@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicación meteorológica para Torres del Paine y alrededores - Pronóstico 7 días con datos horarios, modelos múltiples y datos históricos">
+    <title>ClimaTorre - Torres del Paine | Pronóstico Meteorológico (Módulo 5 - POO + ES6+)</title>
+
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom SASS Compiled CSS -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        /* Custom Tab Styles */
+        .city-tabs-container .nav-pills .nav-link {
+            background-color: #f1f3f5;
+            color: #495057;
+            margin-right: 8px;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid #dee2e6;
+        }
+
+        .city-tabs-container .nav-pills .nav-link:hover {
+            background-color: #e9ecef;
+            transform: translateY(-1px);
+        }
+
+        .city-tabs-container .nav-pills .nav-link.active {
+            background-color: #00bcd4;
+            color: white;
+            border-color: #00bcd4;
+            box-shadow: 0 2px 5px rgba(0, 188, 212, 0.3);
+        }
+
+        /* Estilos para el mapa de Torres del Paine */
+        .torres-map-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .torres-map-container {
+            height: 750px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border: 3px solid #4a90e2;
+            background: #f0f8ff;
+        }
+
+        @media (max-width: 768px) {
+            .torres-map-container {
+                height: 500px;
+            }
+        }
+
+        /* Estilo para la etiqueta del parque en el mapa */
+        .torres-park-label {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        /* Leyenda del mapa de Torres */
+        .torres-map-legend {
+            background: rgba(255, 255, 255, 0.98) !important;
+            padding: 12px 16px !important;
+            border-radius: 10px !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35) !important;
+            font-size: 0.9rem !important;
+            max-width: 260px !important;
+            border: 2px solid rgba(30, 60, 114, 0.25) !important;
+            max-height: 70% !important;
+            overflow-y: auto !important;
+            margin-bottom: 10px !important;
+            margin-right: 10px !important;
+        }
+
+        .torres-map-legend h5 {
+            margin: 0 0 15px 0;
+            font-size: 1.25rem;
+            color: #1e3c72;
+            font-weight: bold;
+            border-bottom: 2px solid #1e3c72;
+            padding-bottom: 10px;
+        }
+
+        .torres-map-legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .torres-map-legend-item span:first-child {
+            display: inline-block;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .torres-map-legend-item span:last-child {
+            color: #333;
+            font-size: 1.05rem;
+        }
+
+        .legend-park-area {
+            background: rgba(74, 144, 226, 0.3);
+            border: 3px solid #4a90e2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Estilos para el control de viento */
+        .wind-control {
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .wind-control button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+        }
+
+        .wind-control button:active {
+            transform: translateY(0);
+        }
+
+        /* Estilos para las flechas de viento */
+        .wind-arrow-head {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        /* Leyenda de viento */
+        .wind-legend {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 18px 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+            font-size: 1rem;
+            min-width: 280px;
+            max-width: 320px;
+            border: 2px solid rgba(30, 60, 114, 0.25);
+        }
+
+        .wind-legend h5 {
+            margin: 0 0 15px 0;
+            font-size: 1.25rem;
+            color: #1e3c72;
+            font-weight: bold;
+            border-bottom: 2px solid #1e3c72;
+            padding-bottom: 10px;
+        }
+
+        .wind-legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .wind-legend-item span:first-child {
+            display: inline-block;
+            width: 45px;
+            height: 6px;
+            margin-right: 15px;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+        }
+
+        .wind-legend-item span:last-child {
+            color: #333;
+            font-size: 1.05rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Weather App Main Container -->
+    <div class="weather-app">
+
+        <!-- Header/Navbar -->
+        <header class="weather-app__header">
+            <nav class="navbar navbar-expand-lg navbar-custom">
+                <div class="container-lg">
+                    <a class="navbar-brand navbar__brand" href="#">
+                        <i class="fas fa-cloud-sun"></i>ClimaTorre
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link navbar__link active" href="#" data-nav="home">
+                                    <i class="fas fa-home"></i> Inicio
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link navbar__link" href="#" data-nav="map">
+                                    <i class="fas fa-map"></i> Mapa
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link navbar__link" href="#" data-nav="stats">
+                                    <i class="fas fa-chart-bar"></i> Estadísticas
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link navbar__link" href="#" data-nav="torres">
+                                    <i class="fas fa-mountain"></i> Torres del Paine
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-sm theme-toggle" id="themeToggle" type="button" title="Cambiar tema" aria-label="Cambiar entre tema claro y oscuro">
+                                    <i class="fas fa-moon" id="themeIcon" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="weather-app__main">
+            <div class="container-lg">
+
+                <!-- Home View -->
+                <section id="home">
+                    <!-- Update Info Banner -->
+                    <div class="update-info">
+                        <i class="fas fa-sync"></i> Actualizado: --/--/---- --:--:--
+                    </div>
+
+                    <!-- Model Selector -->
+                    <div class="model-selector-container mb-4" style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h5 class="mb-3" style="color: #1e3c72; font-weight: bold;">
+                            <i class="fas fa-layer-group"></i> Seleccionar Modelo Meteorológico
+                        </h5>
+                        <p class="text-muted mb-3" style="font-size: 0.9rem;">
+                            Elige el modelo meteorológico para visualizar los pronósticos. Cada modelo tiene diferentes características y puede mostrar variaciones en los datos.
+                        </p>
+                        <div class="row mb-3" id="modelIndicator" style="background: rgba(30, 60, 114, 0.1); padding: 0.75rem; border-radius: 5px; text-align: center; font-size: 0.95rem;">
+                            <div class="col-12">
+                                <i class="fas fa-layer-group"></i> Modelo activo: <strong>Automático (GFS)</strong>
+                            </div>
+                        </div>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons" id="modelSelector" style="width: 100%; flex-wrap: wrap;">
+                            <label class="btn btn-outline-primary active model-btn" data-model="auto" style="flex: 1 1 25%; min-width: 150px;">
+                                <input type="radio" name="model" value="auto" checked>
+                                <i class="fas fa-magic"></i><br>
+                                <strong>Automático (GFS)</strong>
+                                <small class="d-block mt-1" style="font-size: 0.75rem; opacity: 0.8;">Modelo por defecto</small>
+                            </label>
+                            <label class="btn btn-outline-primary model-btn" data-model="ecmwf_ifs025" style="flex: 1 1 25%; min-width: 150px;">
+                                <input type="radio" name="model" value="ecmwf_ifs025">
+                                <i class="fas fa-chart-line"></i><br>
+                                <strong>ECMWF IFS</strong>
+                                <small class="d-block mt-1" style="font-size: 0.75rem; opacity: 0.8;">Alta resolución europeo</small>
+                            </label>
+                            <label class="btn btn-outline-primary model-btn" data-model="gfs_graphcast025" style="flex: 1 1 25%; min-width: 150px;">
+                                <input type="radio" name="model" value="gfs_graphcast025">
+                                <i class="fas fa-globe-americas"></i><br>
+                                <strong>GFS GraphCast</strong>
+                                <small class="d-block mt-1" style="font-size: 0.75rem; opacity: 0.8;">Modelo americano IA</small>
+                            </label>
+                            <label class="btn btn-outline-primary model-btn" data-model="icon_global" style="flex: 1 1 25%; min-width: 150px;">
+                                <input type="radio" name="model" value="icon_global">
+                                <i class="fas fa-cloud"></i><br>
+                                <strong>ICON Global</strong>
+                                <small class="d-block mt-1" style="font-size: 0.75rem; opacity: 0.8;">Modelo alemán</small>
+                            </label>
+                        </div>
+                        <div class="mt-3" id="modelLoadingIndicator" style="display: none;">
+                            <div class="alert alert-info mb-0">
+                                <i class="fas fa-spinner fa-spin"></i> Cargando datos del modelo seleccionado...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page Title -->
+                    <h1 class="page-title">
+                        <i class="fas fa-mountain"></i> Torres del Paine - Clima
+                    </h1>
+                    <p class="section-subtitle">Selecciona una ciudad para ver el pronóstico detallado</p>
+
+                    <!-- Weather Cards Grid -->
+                    <div class="row g-4">
+                        <!-- Cards will be injected here by JS -->
+                    </div>
+
+                    <!-- Torres del Paine Info Card -->
+                    <div class="torres-info-card">
+                        <div class="torres-info-card__header">
+                            <h3 class="torres-info-card__title">
+                                <i class="fas fa-mountain"></i> Torres del Paine - Sector Grey
+                            </h3>
+                            <span class="torres-info-card__badge">Parque Nacional</span>
+                        </div>
+                        <div class="torres-info-card__content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4
+                                        style="color: #4dd0e1; border-bottom: 1px solid #546e7a; padding-bottom: 10px; margin-bottom: 15px;">
+                                        📍 Ubicación Estratégica
+                                    </h4>
+                                    <ul style="list-style: none; padding: 0; font-size: 0.95rem; color: #cfd8dc;">
+                                        <li style="margin-bottom: 8px;"><strong>Punto Cero:</strong> Refugio/Glaciar
+                                            Grey</li>
+                                        <li style="margin-bottom: 8px;"><strong>Coordenadas:</strong> 51°00'S, 73°13'O
+                                        </li>
+                                        <li style="margin-bottom: 8px;"><strong>Acceso:</strong> Navegación Lago Grey o
+                                            Trekking W</li>
+                                        <li><strong>Glaciares:</strong> Grey, Pío XI, Tyndall</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4
+                                        style="color: #4dd0e1; border-bottom: 1px solid #546e7a; padding-bottom: 10px; margin-bottom: 15px;">
+                                        ⚠️ Condiciones Actuales
+                                    </h4>
+                                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+                                        <div style="font-size: 2.5rem; color: #fff;" id="torres-temp-widget">--°C</div>
+                                        <div style="font-size: 0.9rem; color: #b0bec5;">Temperatura estimada<br>en el
+                                            glaciar</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Section -->
+                    <div id="mapa" class="map-section">
+                        <div class="map-header" data-toggle="map">
+                            <h3><i class="fas fa-map"></i> Mapa Interactivo</h3>
+                            <span class="map-toggle"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div id="mapContainer"></div>
+                    </div>
+                </section>
+
+                <!-- Stats & Alerts View (Initially Hidden) -->
+                <section id="stats" style="display:none;">
+                    <h2 class="page-title"><i class="fas fa-chart-line"></i> Pronóstico 7 Días</h2>
+
+                    <!-- Alerts Container -->
+                    <div id="alertsContainer" class="mb-4">
+                        <!-- Alerts will be injected here JS -->
+                    </div>
+
+                    <!-- City Selection Tabs -->
+                    <div class="city-tabs-container mb-4">
+                        <ul class="nav nav-pills flex-nowrap" id="cityTabs">
+                            <!-- Tabs injected by JS -->
+                        </ul>
+                    </div>
+
+                    <!-- Chart Container -->
+                    <div class="chart-container">
+                        <h4 class="text-center mb-3 text-primary" id="chartTitle">Temperaturas Máx/Mín</h4>
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-custom" type="button" data-action="go-home">
+                            <i class="fas fa-arrow-left"></i> Volver al Inicio
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Torres del Paine Detailed View (Initially Hidden) -->
+                <section id="torres-paine" style="display:none;">
+                    <h2 class="page-title">
+                        <i class="fas fa-mountain"></i> Torres del Paine - Pronóstico Detallado
+                    </h2>
+                    <p class="section-subtitle">Condiciones meteorológicas en puntos clave del Circuito W y O</p>
+
+                    <!-- Model Selector -->
+                    <div class="model-selector-container mb-4" style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h5 class="mb-3" style="color: #1e3c72; font-weight: bold;">
+                            <i class="fas fa-layer-group"></i> Seleccionar Modelo Meteorológico
+                        </h5>
+                        <p class="text-muted mb-3" style="font-size: 0.9rem;">
+                            Elige el modelo meteorológico para visualizar los pronósticos. Cada modelo tiene diferentes características y puede mostrar variaciones en los datos.
+                        </p>
+                        <div class="row mb-3" id="modelIndicatorTorres" style="background: rgba(30, 60, 114, 0.1); padding: 0.75rem; border-radius: 5px; text-align: center; font-size: 0.95rem;">
+                            <div class="col-12">
+                                <i class="fas fa-layer-group"></i> Modelo activo: <strong>Automático (GFS)</strong>
+                            </div>
+                        </div>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons" id="modelSelectorTorres" style="width: 100%; flex-wrap: wrap;">
+                            <label class="btn btn-outline-primary active model-btn" data-model="auto" style="flex: 1 1 25%; min-width: 150px;">
+                                <input type="radio" name="modelTorres" value="auto" checked>
+                                <i class="fas fa-magic"></i><br>
+                                <strong>Automático (GFS)</strong>
+                                <small class="d-block mt-1" style="font-size: 0.75rem; opacity: 0.8;">Modelo por defecto</small>
+                            </label>
+                            <label class="btn btn-outline-primary model-btn" data-model="ecmwf_ifs025" style="flex: 1 1 25%; min-width: 150px;">
+                                <input type="radio" name="modelTorres" value="ecmwf_ifs025">
+                                <i class="fas fa-chart-line"></i><br>
+                                <strong>ECMWF IFS</strong>
+                                <small class="d-block mt-1" style="font-size: 0.75rem; opacity: 0.8;">Alta resolución europeo</small>
+                            </label>
+                            <label class="btn btn-outline-primary model-btn" data-model="gfs_graphcast025" style="flex: 1 1 25%; min-width: 150px;">
+                                <input type="radio" name="modelTorres" value="gfs_graphcast025">
+                                <i class="fas fa-globe-americas"></i><br>
+                                <strong>GFS GraphCast</strong>
+                                <small class="d-block mt-1" style="font-size: 0.75rem; opacity: 0.8;">Modelo americano IA</small>
+                            </label>
+                            <label class="btn btn-outline-primary model-btn" data-model="icon_global" style="flex: 1 1 25%; min-width: 150px;">
+                                <input type="radio" name="modelTorres" value="icon_global">
+                                <i class="fas fa-cloud"></i><br>
+                                <strong>ICON Global</strong>
+                                <small class="d-block mt-1" style="font-size: 0.75rem; opacity: 0.8;">Modelo alemán</small>
+                            </label>
+                        </div>
+                        <div class="mt-3" id="modelLoadingIndicatorTorres" style="display: none;">
+                            <div class="alert alert-info mb-0">
+                                <i class="fas fa-spinner fa-spin"></i> Cargando datos del modelo seleccionado...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Torres Map Container -->
+                    <div class="torres-map-section mb-4">
+                        <div id="torresMapContainer" class="torres-map-container">
+                        </div>
+                    </div>
+
+                    <!-- Freezing Level Chart -->
+                    <div class="mb-4">
+                        <h3 class="text-center mb-3 freezing-chart-title">
+                            <i class="fas fa-mountain"></i> Isoterma Cero (Altura de Congelación)
+                        </h3>
+                        <div class="chart-container freezing-level-chart">
+                            <canvas id="freezingLevelChart"></canvas>
+                        </div>
+                        <div class="text-center mt-2">
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle"></i> La línea roja indica la altura donde la temperatura
+                                es 0°C. Por encima de esta línea, espera nieve/hielo.
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Weather Points Grid -->
+                    <div id="torresWeatherPoints" class="row g-4">
+                        <!-- Points will be injected by JS -->
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-custom" type="button" data-action="go-home">
+                            <i class="fas fa-arrow-left"></i> Volver al Inicio
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Detail View (Initially Hidden) -->
+                <section id="detail" style="display:none;">
+                    <a href="#" class="btn btn-custom btn--back" data-action="go-home">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </a>
+                    <div id="detailContent"></div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="weather-app__footer footer">
+            <div class="footer__content">
+                <p class="footer__title">ClimaTorre - Pronóstico Meteorológico Torres del Paine</p>
+                <hr class="footer__divider">
+                <p class="footer__text">
+                    Módulo 5 - Portafolio | Programación Orientada a Objetos (POO) + ES6+ + API Open-Meteo
+                </p>
+                <p class="footer__text">
+                    Aplicación de metodologías BEM, SASS, Bootstrap 4 y Programación Asíncrona
+                </p>
+                <p class="footer__text">
+                    © 2025 METGO_3D | Datos de <a href="https://open-meteo.com/" class="footer__link"
+                        target="_blank">Open-Meteo API</a> | Funcionalidades avanzadas: Datos horarios, modelos múltiples y datos históricos
+                </p>
+                <p class="footer__text">
+                    <small>Desarrollado como parte del curso de Desarrollo Frontend</small>
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- jQuery (required for Bootstrap 4) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap 4 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- toGeoJSON (necesario para convertir GPX a GeoJSON) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mapbox/togeojson@0.16.0/togeojson.min.js"></script>
+    <!-- ============================================ -->
+    <!-- Módulo 5: Clases POO + ES6+ -->
+    <!-- ============================================ -->
+    <!-- Configuración de ciudades -->
+    <script src="js/config/ciudades.js"></script>
+    
+    <!-- Clases principales (orden importante) -->
+    <script src="js/classes/ApiClient.js"></script>
+    <script src="js/classes/EstadisticasCalculator.js"></script>
+    <script src="js/classes/WeatherAlerts.js"></script>
+    <script src="js/classes/LLMAlertGenerator.js"></script>
+    <script src="js/classes/CircuitAlertGenerator.js"></script>
+    <script src="js/classes/WeatherApp.js"></script>
+    
+    <!-- Weather Service (mantiene compatibilidad temporal) -->
+    <script src="js/weatherService.js?v=5"></script>
+    
+    <!-- Theme Manager (must load early) -->
+    <script src="js/theme.js"></script>
+    
+    <!-- Navigation Event Handlers (must load before app.js) -->
+    <script src="js/navigation.js"></script>
+
+    <!-- Utilidades para excursionistas -->
+    <script src="js/utils/excursionista.js"></script>
+    
+    <!-- Trail Loader Utility (para cargar senderos reales desde GeoJSON/OSM/GPX) -->
+    <script src="js/utils/trailLoader.js"></script>
+
+    <!-- ============================================ -->
+    <!-- Módulo 4: Datos estáticos de lugares -->
+    <!-- ============================================ -->
+    <script src="js/lugares.js"></script>
+    
+    <!-- ============================================ -->
+    <!-- OPCIONAL: Servicios mejorados (Senior Dev) -->
+    <!-- Descomentar para usar arquitectura modular -->
+    <!-- ============================================ -->
+    <!--
+    <script src="js/config/constants.js"></script>
+    <script src="js/utils/validators.js"></script>
+    <script src="js/utils/mathUtils.js"></script>
+    <script src="js/services/LugarService.js"></script>
+    <script src="js/services/EstadisticasService.js"></script>
+    -->
+    
+    <!-- Custom JavaScript -->
+    <script src="js/app.js?v=6"></script>
+</body>
+
+</html>

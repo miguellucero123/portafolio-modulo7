@@ -1,307 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aplicación meteorológica para Torres del Paine y alrededores - Pronóstico 7 días">
-    <title>ClimaTorre - Torres del Paine | Pronóstico 7 Días</title>
-
-    <!-- Bootstrap 4 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Custom SASS Compiled CSS -->
-    <link rel="stylesheet" href="css/main.css">
-
-    <style>
-        /* Custom Tab Styles */
-        .city-tabs-container .nav-pills .nav-link {
-            background-color: #f1f3f5;
-            color: #495057;
-            margin-right: 8px;
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border: 1px solid #dee2e6;
-        }
-
-        .city-tabs-container .nav-pills .nav-link:hover {
-            background-color: #e9ecef;
-            transform: translateY(-1px);
-        }
-
-        .city-tabs-container .nav-pills .nav-link.active {
-            background-color: #00bcd4;
-            color: white;
-            border-color: #00bcd4;
-            box-shadow: 0 2px 5px rgba(0, 188, 212, 0.3);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ClimaTorre - Aplicación SPA con Vue.js para consultar el pronóstico meteorológico de Torres del Paine, Patagonia chilena">
+  <meta name="keywords" content="Torres del Paine, clima, pronóstico, Vue.js, SPA, Patagonia, trekking">
+  <meta name="author" content="ClimaTorre Team">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ClimaTorre - Torres del Paine Weather">
+  <meta property="og:description" content="Consulta el pronóstico meteorológico de los circuitos W y O de Torres del Paine">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ClimaTorre - Torres del Paine Weather">
+  
+  <title>ClimaTorre - Torres del Paine Weather | Vue.js SPA</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏔️</text></svg>">
+  
+  <!-- Preconnect to external resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <!-- Weather App Main Container -->
-    <div class="weather-app">
-
-        <!-- Header/Navbar -->
-        <header class="weather-app__header">
-            <nav class="navbar navbar-expand-lg navbar-custom">
-                <div class="container-lg">
-                    <a class="navbar-brand navbar__brand" href="#">
-                        <i class="fas fa-cloud-sun"></i>ClimaTorre
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link navbar__link active" href="#" data-nav="home">
-                                    <i class="fas fa-home"></i> Inicio
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link navbar__link" href="#" data-nav="map">
-                                    <i class="fas fa-map"></i> Mapa
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link navbar__link" href="#" data-nav="stats">
-                                    <i class="fas fa-chart-bar"></i> Estadísticas
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link navbar__link" href="#" data-nav="torres">
-                                    <i class="fas fa-mountain"></i> Torres del Paine
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <button class="btn btn-sm theme-toggle" id="themeToggle" type="button" title="Cambiar tema" aria-label="Cambiar entre tema claro y oscuro">
-                                    <i class="fas fa-moon" id="themeIcon" aria-hidden="true"></i>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        <!-- Main Content -->
-        <main class="weather-app__main">
-            <div class="container-lg">
-
-                <!-- Home View -->
-                <section id="home">
-                    <!-- Update Info Banner -->
-                    <div class="update-info">
-                        <i class="fas fa-sync"></i> Actualizado: --/--/---- --:--:--
-                    </div>
-
-                    <!-- Page Title -->
-                    <h1 class="page-title">
-                        <i class="fas fa-mountain"></i> Torres del Paine - Clima
-                    </h1>
-                    <p class="section-subtitle">Selecciona una ciudad para ver el pronóstico detallado</p>
-
-                    <!-- Weather Cards Grid -->
-                    <div class="row g-4">
-                        <!-- Cards will be injected here by JS -->
-                    </div>
-
-                    <!-- Torres del Paine Info Card -->
-                    <div class="torres-info-card">
-                        <div class="torres-info-card__header">
-                            <h3 class="torres-info-card__title">
-                                <i class="fas fa-mountain"></i> Torres del Paine - Sector Grey
-                            </h3>
-                            <span class="torres-info-card__badge">Parque Nacional</span>
-                        </div>
-                        <div class="torres-info-card__content">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4
-                                        style="color: #4dd0e1; border-bottom: 1px solid #546e7a; padding-bottom: 10px; margin-bottom: 15px;">
-                                        📍 Ubicación Estratégica
-                                    </h4>
-                                    <ul style="list-style: none; padding: 0; font-size: 0.95rem; color: #cfd8dc;">
-                                        <li style="margin-bottom: 8px;"><strong>Punto Cero:</strong> Refugio/Glaciar
-                                            Grey</li>
-                                        <li style="margin-bottom: 8px;"><strong>Coordenadas:</strong> 51°00'S, 73°13'O
-                                        </li>
-                                        <li style="margin-bottom: 8px;"><strong>Acceso:</strong> Navegación Lago Grey o
-                                            Trekking W</li>
-                                        <li><strong>Glaciares:</strong> Grey, Pío XI, Tyndall</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <h4
-                                        style="color: #4dd0e1; border-bottom: 1px solid #546e7a; padding-bottom: 10px; margin-bottom: 15px;">
-                                        ⚠️ Condiciones Actuales
-                                    </h4>
-                                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
-                                        <div style="font-size: 2.5rem; color: #fff;" id="torres-temp-widget">--°C</div>
-                                        <div style="font-size: 0.9rem; color: #b0bec5;">Temperatura estimada<br>en el
-                                            glaciar</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Map Section -->
-                    <div id="mapa" class="map-section">
-                        <div class="map-header" data-toggle="map">
-                            <h3><i class="fas fa-map"></i> Mapa Interactivo</h3>
-                            <span class="map-toggle"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div id="mapContainer"></div>
-                    </div>
-                </section>
-
-                <!-- Stats & Alerts View (Initially Hidden) -->
-                <section id="stats" style="display:none;">
-                    <h2 class="page-title"><i class="fas fa-chart-line"></i> Pronóstico 7 Días</h2>
-
-                    <!-- Alerts Container -->
-                    <div id="alertsContainer" class="mb-4">
-                        <!-- Alerts will be injected here JS -->
-                    </div>
-
-                    <!-- City Selection Tabs -->
-                    <div class="city-tabs-container mb-4">
-                        <ul class="nav nav-pills flex-nowrap" id="cityTabs">
-                            <!-- Tabs injected by JS -->
-                        </ul>
-                    </div>
-
-                    <!-- Chart Container -->
-                    <div class="chart-container">
-                        <h4 class="text-center mb-3 text-primary" id="chartTitle">Temperaturas Máx/Mín</h4>
-                        <canvas id="forecastChart"></canvas>
-                    </div>
-
-                    <div class="text-center mt-4">
-                        <button class="btn btn-custom" type="button" data-action="go-home">
-                            <i class="fas fa-arrow-left"></i> Volver al Inicio
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Torres del Paine Detailed View (Initially Hidden) -->
-                <section id="torres-paine" style="display:none;">
-                    <h2 class="page-title">
-                        <i class="fas fa-mountain"></i> Torres del Paine - Pronóstico Detallado
-                    </h2>
-                    <p class="section-subtitle">Condiciones meteorológicas en puntos clave del Circuito W y O</p>
-
-                    <!-- Torres Map Container -->
-                    <div class="torres-map-section mb-4">
-                        <div id="torresMapContainer" class="torres-map-container">
-                        </div>
-                    </div>
-
-                    <!-- Freezing Level Chart -->
-                    <div class="mb-4">
-                        <h3 class="text-center mb-3 freezing-chart-title">
-                            <i class="fas fa-mountain"></i> Isoterma Cero (Altura de Congelación)
-                        </h3>
-                        <div class="chart-container freezing-level-chart">
-                            <canvas id="freezingLevelChart"></canvas>
-                        </div>
-                        <div class="text-center mt-2">
-                            <small class="text-muted">
-                                <i class="fas fa-info-circle"></i> La línea roja indica la altura donde la temperatura
-                                es 0°C. Por encima de esta línea, espera nieve/hielo.
-                            </small>
-                        </div>
-                    </div>
-
-                    <!-- Weather Points Grid -->
-                    <div id="torresWeatherPoints" class="row g-4">
-                        <!-- Points will be injected by JS -->
-                    </div>
-
-                    <div class="text-center mt-4">
-                        <button class="btn btn-custom" type="button" data-action="go-home">
-                            <i class="fas fa-arrow-left"></i> Volver al Inicio
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Detail View (Initially Hidden) -->
-                <section id="detail" style="display:none;">
-                    <a href="#" class="btn btn-custom btn--back" data-action="go-home">
-                        <i class="fas fa-arrow-left"></i> Volver
-                    </a>
-                    <div id="detailContent"></div>
-                </section>
-
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="weather-app__footer footer">
-            <div class="footer__content">
-                <p class="footer__title">ClimaTorre - Pronóstico Meteorológico Torres del Paine</p>
-                <hr class="footer__divider">
-                <p class="footer__text">
-                    Módulo 3 - Portafolio | Aplicación de metodologías BEM, SASS y Bootstrap 4
-                </p>
-                <p class="footer__text">
-                    © 2025 METGO_3D | Datos de <a href="https://open-meteo.com/" class="footer__link"
-                        target="_blank">Open-Meteo API</a>
-                </p>
-                <p class="footer__text">
-                    <small>Desarrollado como parte del curso de Desarrollo Frontend</small>
-                </p>
-            </div>
-        </footer>
-
-    </div>
-
-    <!-- jQuery (required for Bootstrap 4) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap 4 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Weather Service (must load before app.js) -->
-    <script src="js/weatherService.js?v=5"></script>
-    
-    <!-- Theme Manager (must load early) -->
-    <script src="js/theme.js"></script>
-    
-    <!-- Navigation Event Handlers (must load before app.js) -->
-    <script src="js/navigation.js"></script>
-
-    <!-- Utilidades para excursionistas -->
-    <script src="js/utils/excursionista.js"></script>
-
-    <!-- ============================================ -->
-    <!-- Módulo 4: Datos estáticos de lugares -->
-    <!-- ============================================ -->
-    <script src="js/lugares.js"></script>
-    
-    <!-- ============================================ -->
-    <!-- OPCIONAL: Servicios mejorados (Senior Dev) -->
-    <!-- Descomentar para usar arquitectura modular -->
-    <!-- ============================================ -->
-    <!--
-    <script src="js/config/constants.js"></script>
-    <script src="js/utils/validators.js"></script>
-    <script src="js/utils/mathUtils.js"></script>
-    <script src="js/services/LugarService.js"></script>
-    <script src="js/services/EstadisticasService.js"></script>
-    -->
-    
-    <!-- Custom JavaScript -->
-    <script src="js/app.js?v=5"></script>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
 </body>
-
 </html>

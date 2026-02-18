@@ -1,22 +1,33 @@
 {
-  "name": "modulo3_portafolio",
-  "version": "1.0.0",
-  "description": "Torres del Paine Weather App - Module 3 Portfolio with BEM, SASS, and Bootstrap 4",
-  "main": "index.js",
+  "name": "climatore-vue-spa",
+  "version": "2.0.0",
+  "description": "ClimaTorre - Torres del Paine Weather App | SPA con Vue.js (Módulo 6)",
+  "main": "src/main.js",
+  "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "build-css": "sass scss/main.scss css/main.css",
-    "watch-css": "sass --watch scss/main.scss css/main.css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch-css": "sass --watch scss/main.scss css/main.css"
   },
   "keywords": [
     "weather",
-    "sass",
-    "bem",
-    "bootstrap"
+    "vue",
+    "vue-router",
+    "spa",
+    "torres-del-paine"
   ],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "lucide-vue-next": "^0.574.0",
+    "vue": "^3.4.15",
+    "vue-router": "^4.2.5"
+  },
   "devDependencies": {
-    "sass": "^1.94.2"
+    "@vitejs/plugin-vue": "^5.0.3",
+    "sass": "^1.94.2",
+    "vite": "^5.0.12"
   }
 }

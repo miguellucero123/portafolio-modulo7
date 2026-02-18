@@ -8,5 +8,3 @@ node_modules/
 .env.local
 dist/
 build/
-
-.early.coverage
