@@ -86,9 +86,13 @@ npm run preview
 
 ## Repositorio público
 
-Actualice el siguiente enlace con el repositorio GitHub oficial de la entrega:
+Repositorio **dedicado al Módulo 7** (crear en GitHub y enlazar; instrucciones paso a paso en [`docs/GITHUB_SETUP_M7.md`](./docs/GITHUB_SETUP_M7.md)):
 
-`https://github.com/miguellucero123/portafolio_modulo6`
+`https://github.com/miguellucero123/portafolio-modulo7`
+
+Sustituya usuario y nombre del repositorio si utiliza otra convención. Hasta que el repositorio no exista en GitHub, ese enlace no será válido.
+
+Repositorio histórico del mismo código base (referencia): `https://github.com/miguellucero123/weather-frontend-m3`
 
 ## Documentación complementaria
 
