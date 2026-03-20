@@ -1,5 +1,6 @@
 <template>
-  <router-link :to="`/lugar/${lugar.id}`" class="place-card">
+  <div class="place-card-wrapper">
+    <router-link :to="`/lugar/${lugar.id}`" class="place-card">
     <div class="card-header" :class="getWeatherClass(lugar.estadoActual)">
       <div class="place-icon">
         <WeatherIcon :icon="lugar.icono" :size="48" :stroke-width="1.5" />
@@ -63,7 +64,19 @@
     <div class="card-footer">
       <span class="view-details">Ver pronóstico completo →</span>
     </div>
-  </router-link>
+    </router-link>
+    <button
+      v-if="showFavorite && isAuthenticated"
+      type="button"
+      class="place-fav-btn"
+      :class="{ active: favorited }"
+      :title="favorited ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+      :aria-pressed="favorited"
+      @click="onToggleFavorite"
+    >
+      <Heart :size="22" :fill="favorited ? 'currentColor' : 'none'" />
+    </button>
+  </div>
 </template>
 
 <script>
@@ -75,7 +88,8 @@ import {
   getDificultadColor 
 } from '@utils/helpers.js';
 import WeatherIcon from './WeatherIcon.vue';
-import { Target, Mountain, TrendingUp, ThermometerSnowflake, ThermometerSun } from 'lucide-vue-next';
+import { mapState, mapGetters, mapActions } from 'vuex';
+import { Target, Mountain, TrendingUp, ThermometerSnowflake, ThermometerSun, Heart } from 'lucide-vue-next';
 
 export default {
   name: 'PlaceCard',
@@ -85,7 +99,8 @@ export default {
     Mountain,
     TrendingUp,
     ThermometerSnowflake,
-    ThermometerSun
+    ThermometerSun,
+    Heart
   },
   props: {
     lugar: {
@@ -95,9 +110,20 @@ export default {
     tempUnit: {
       type: String,
       default: 'C'
+    },
+    showFavorite: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
+    ...mapState({
+      isAuthenticated: (s) => !!s.user
+    }),
+    ...mapGetters(['isFavorite']),
+    favorited() {
+      return this.isFavorite(this.lugar.id);
+    },
     tempMinMax() {
       if (!this.lugar.pronosticoSemanal || this.lugar.pronosticoSemanal.length === 0) {
         return { min: 0, max: 0 };
@@ -111,6 +137,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['toggleFavorite']),
+    onToggleFavorite(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.toggleFavorite(this.lugar.id);
+    },
     getWeatherIcon,
     getWeatherClass,
     getDificultadClass(dificultad) {
@@ -134,6 +166,38 @@ export default {
 </script>
 
 <style scoped>
+.place-card-wrapper {
+  position: relative;
+}
+
+.place-fav-btn {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  z-index: 3;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.place-fav-btn:hover {
+  transform: scale(1.08);
+  color: #f43f5e;
+}
+
+.place-fav-btn.active {
+  color: #e11d48;
+}
+
 .place-card {
   display: block;
   background: white;

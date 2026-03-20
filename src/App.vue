@@ -12,24 +12,40 @@
         </div>
 
         <div class="navbar-actions">
-          <!-- Selector de unidad de temperatura -->
+          <nav class="navbar-auth" aria-label="Cuenta">
+            <template v-if="isAuthenticated">
+              <router-link to="/favoritos" class="nav-link">Favoritos</router-link>
+              <router-link to="/preferencias-clima" class="nav-link">Preferencias</router-link>
+              <span class="user-pill">{{ user.nombre }}</span>
+              <button type="button" class="btn-logout" @click="onLogout">Cerrar sesión</button>
+            </template>
+            <template v-else>
+              <router-link to="/login" class="nav-link">Iniciar sesión</router-link>
+              <router-link to="/registro" class="nav-link">Registro</router-link>
+            </template>
+          </nav>
+
+          <!-- Selector de unidad de temperatura (Vuex: preferences.tempUnit) -->
           <div class="temp-unit-selector">
             <button 
-              :class="['unit-btn', { active: tempUnit === 'C' }]"
-              @click="tempUnit = 'C'"
+              type="button"
+              :class="['unit-btn', { active: preferences.tempUnit === 'C' }]"
+              @click="setTempUnit('C')"
             >
               °C
             </button>
             <button 
-              :class="['unit-btn', { active: tempUnit === 'F' }]"
-              @click="tempUnit = 'F'"
+              type="button"
+              :class="['unit-btn', { active: preferences.tempUnit === 'F' }]"
+              @click="setTempUnit('F')"
             >
               °F
             </button>
           </div>
 
-          <!-- Toggle tema oscuro -->
+          <!-- Toggle tema (Vuex: preferences.theme) -->
           <button 
+            type="button"
             class="theme-toggle" 
             @click="toggleTheme"
             :title="isDarkMode ? 'Modo claro' : 'Modo oscuro'"
@@ -43,10 +59,7 @@
 
     <!-- Contenido principal con RouterView -->
     <main class="main-content">
-      <router-view 
-        :temp-unit="tempUnit"
-        @update:tempUnit="tempUnit = $event"
-      />
+      <router-view :temp-unit="preferences.tempUnit" />
     </main>
 
     <!-- Footer -->
@@ -54,7 +67,7 @@
       <div class="footer-content">
         <p>
           <strong>ClimaTorre</strong> - Aplicación SPA con Vue.js | 
-          Módulo 6 Portafolio
+          Módulo 7 Portafolio
         </p>
         <p class="footer-links">
           <a href="https://github.com/miguellucero123/weather-frontend-m3" target="_blank">
@@ -69,6 +82,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
 import { Mountain, Sun, Moon } from 'lucide-vue-next';
 
 export default {
@@ -78,33 +92,27 @@ export default {
     Sun,
     Moon
   },
-  data() {
-    return {
-      isDarkMode: false,
-      tempUnit: 'C' // 'C' para Celsius, 'F' para Fahrenheit
-    };
-  },
-  mounted() {
-    // Cargar preferencias del usuario desde localStorage
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      this.isDarkMode = true;
-    }
-
-    const savedUnit = localStorage.getItem('tempUnit');
-    if (savedUnit) {
-      this.tempUnit = savedUnit;
+  computed: {
+    ...mapState(['user', 'preferences']),
+    ...mapGetters(['isAuthenticated']),
+    isDarkMode() {
+      return this.preferences.theme === 'dark';
     }
   },
   methods: {
+    ...mapActions(['updatePreferences', 'logout']),
+    setTempUnit(tempUnit) {
+      this.updatePreferences({ tempUnit });
+    },
     toggleTheme() {
-      this.isDarkMode = !this.isDarkMode;
-      localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
-    }
-  },
-  watch: {
-    tempUnit(newValue) {
-      localStorage.setItem('tempUnit', newValue);
+      const next = this.isDarkMode ? 'light' : 'dark';
+      this.updatePreferences({ theme: next });
+    },
+    onLogout() {
+      this.logout();
+      if (this.$route.meta?.requiresAuth) {
+        this.$router.push('/');
+      }
     }
   }
 };
@@ -206,6 +214,58 @@ export default {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.dark-mode .nav-link {
+  color: #e2e8f0;
+}
+
+.user-pill {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c7d2fe;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-logout {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.18);
 }
 
 /* Selector de temperatura */

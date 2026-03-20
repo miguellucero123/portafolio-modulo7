@@ -112,6 +112,7 @@
           :key="lugar.id"
           :lugar="lugar"
           :temp-unit="tempUnit"
+          :show-favorite="true"
         />
       </section>
 

@@ -25,7 +25,20 @@
               <WeatherIcon :icon="lugar.icono" :size="80" :stroke-width="1.5" />
             </div>
             <div class="header-info">
-              <h1 class="lugar-title">{{ lugar.nombre }}</h1>
+              <div class="header-title-row">
+                <h1 class="lugar-title">{{ lugar.nombre }}</h1>
+                <button
+                  v-if="isAuthenticated"
+                  type="button"
+                  class="lugar-fav-btn"
+                  :class="{ active: isFavoriteLugar }"
+                  :title="isFavoriteLugar ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+                  :aria-pressed="isFavoriteLugar"
+                  @click="onToggleFav"
+                >
+                  <Heart :size="28" :fill="isFavoriteLugar ? 'currentColor' : 'none'" />
+                </button>
+              </div>
               <p class="lugar-description">{{ lugar.descripcion }}</p>
               <div class="header-badges">
                 <span class="badge circuit-badge" :class="`circuit-${lugar.circuito}`">
@@ -359,6 +372,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
 import { useWeather } from '@composables/useWeather.js';
 import { 
   getWeatherIcon, 
@@ -375,7 +389,7 @@ import WeatherIcon from '@components/WeatherIcon.vue';
 import { 
   Frown, Target, Mountain, TrendingUp, CloudSun, BarChart2, 
   ThermometerSnowflake, ThermometerSun, Thermometer, Droplets, 
-  Wind, Lightbulb, Backpack, AlertTriangle, Calendar, LayoutGrid, List 
+  Wind, Lightbulb, Backpack, AlertTriangle, Calendar, LayoutGrid, List, Heart 
 } from 'lucide-vue-next';
 
 export default {
@@ -384,7 +398,7 @@ export default {
     WeatherIcon,
     Frown, Target, Mountain, TrendingUp, CloudSun, BarChart2, 
     ThermometerSnowflake, ThermometerSun, Thermometer, Droplets, 
-    Wind, Lightbulb, Backpack, AlertTriangle, Calendar, LayoutGrid, List
+    Wind, Lightbulb, Backpack, AlertTriangle, Calendar, LayoutGrid, List, Heart
   },
   props: {
     id: {
@@ -409,6 +423,14 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      isAuthenticated: (s) => !!s.user
+    }),
+    ...mapGetters(['isFavorite']),
+    isFavoriteLugar() {
+      if (!this.lugar) return false;
+      return this.isFavorite(this.lugar.id);
+    },
     lugar() {
       // Usamos el computed que retorna el composable
       return this.getLugarById(this.id).value;
@@ -529,6 +551,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['toggleFavorite']),
+    onToggleFav() {
+      if (this.lugar) this.toggleFavorite(this.lugar.id);
+    },
     getWeatherIcon,
     getWeatherClass,
     getDificultadClass(dificultad) {
@@ -696,6 +722,43 @@ export default {
 
 .header-info {
   flex: 1;
+}
+
+.header-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.header-title-row .lugar-title {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.lugar-fav-btn {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.lugar-fav-btn:hover {
+  transform: scale(1.06);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.lugar-fav-btn.active {
+  color: #fecdd3;
 }
 
 .lugar-title {

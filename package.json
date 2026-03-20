@@ -1,7 +1,7 @@
 {
   "name": "climatore-vue-spa",
   "version": "2.0.0",
-  "description": "ClimaTorre - Torres del Paine Weather App | SPA con Vue.js (Módulo 6)",
+  "description": "ClimaTorre - Torres del Paine Weather App | SPA Vue 3 + Vuex (Módulo 7)",
   "main": "src/main.js",
   "type": "module",
   "scripts": {
@@ -23,7 +23,8 @@
   "dependencies": {
     "lucide-vue-next": "^0.574.0",
     "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.3",

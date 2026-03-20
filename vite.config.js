@@ -13,7 +13,9 @@ export default defineConfig({
       '@composables': path.resolve(__dirname, './src/composables'),
       '@data': path.resolve(__dirname, './src/data'),
       '@utils': path.resolve(__dirname, './src/utils'),
-      '@assets': path.resolve(__dirname, './src/assets')
+      '@assets': path.resolve(__dirname, './src/assets'),
+      '@services': path.resolve(__dirname, './src/services'),
+      '@store': path.resolve(__dirname, './src/store')
     }
   },
   server: {
