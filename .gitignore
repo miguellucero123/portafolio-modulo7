@@ -9,4 +9,7 @@ node_modules/
 dist/
 build/
 
+# Netlify CLI local
+.netlify/
+
 .early.coverage

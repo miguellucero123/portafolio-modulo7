@@ -75,6 +75,12 @@ npm run build
 npm run preview
 ```
 
+## Despliegue (Netlify)
+
+El archivo `netlify.toml` define el build (`npm run build`), la publicación desde `dist` y la redirección necesaria para **Vue Router** (modo history). Instrucciones detalladas: [`docs/DEPLOY_NETLIFY.md`](./docs/DEPLOY_NETLIFY.md).
+
+Resumen: conecte el repositorio en [app.netlify.com](https://app.netlify.com), deje que Netlify use la configuración del archivo y despliegue. No requiere cambios de `base` en Vite para un sitio en la raíz del dominio.
+
 ## Stack tecnológico
 
 | Componente | Versión declarada (referencia) |

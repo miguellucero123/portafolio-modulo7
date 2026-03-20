@@ -1,0 +1,14 @@
+# Despliegue en Netlify — https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Vue Router (history): rutas del cliente sin 404 al recargar
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
