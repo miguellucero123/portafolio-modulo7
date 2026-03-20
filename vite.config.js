@@ -18,8 +18,11 @@ export default defineConfig({
       '@store': path.resolve(__dirname, './src/store')
     }
   },
+  // Puerto distinto al 5173 por defecto para evitar conflictos con otros proyectos
+  // que tengan Service Worker registrado en localhost:5173 (p. ej. caché de otro ERP).
   server: {
-    port: 5173,
+    port: 5174,
+    strictPort: false,
     open: true,
     host: true
   }

@@ -1,0 +1,9 @@
+Copia de los manifiestos npm de la raíz del repositorio (modulo7_portafolio/).
+
+Sirven para:
+- Verificar versiones sin abrir el proyecto completo.
+- Ejecutar "npm ci" o "npm install" si copias solo esta carpeta a otra máquina junto con el código fuente (coloca estos archivos en la raíz del proyecto antes de instalar).
+
+Archivos:
+- package.json   → dependencias declaradas
+- package-lock.json → árbol resuelto (reproducible con npm ci)

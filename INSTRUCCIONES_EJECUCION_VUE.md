@@ -74,15 +74,15 @@ npm run dev
 ```
 VITE v5.0.12  ready in XXX ms
 
-➜  Local:   http://localhost:5173/
-➜  Network: http://192.168.X.X:5173/
+➜  Local:   http://localhost:5174/
+➜  Network: http://192.168.X.X:5174/
 ➜  press h to show help
 ```
 
 ### Acceder a la aplicación
 
 1. **Automático:** El navegador debería abrirse automáticamente
-2. **Manual:** Abre tu navegador y ve a: `http://localhost:5173/`
+2. **Manual:** Abre tu navegador y ve a: `http://localhost:5174/`
 
 ---
 
@@ -159,13 +159,13 @@ VITE v5.0.12  ready in XXX ms
 
 ### Ejemplos de Rutas
 
-- **Home:** `http://localhost:5173/`
-- **Base Torres:** `http://localhost:5173/lugar/1`
-- **Glaciar Grey:** `http://localhost:5173/lugar/2`
-- **Valle del Francés:** `http://localhost:5173/lugar/3`
-- **Refugio Paine Grande:** `http://localhost:5173/lugar/4`
-- **Campamento Italiano:** `http://localhost:5173/lugar/5`
-- **Los Cuernos:** `http://localhost:5173/lugar/6`
+- **Home:** `http://localhost:5174/`
+- **Base Torres:** `http://localhost:5174/lugar/1`
+- **Glaciar Grey:** `http://localhost:5174/lugar/2`
+- **Valle del Francés:** `http://localhost:5174/lugar/3`
+- **Refugio Paine Grande:** `http://localhost:5174/lugar/4`
+- **Campamento Italiano:** `http://localhost:5174/lugar/5`
+- **Los Cuernos:** `http://localhost:5174/lugar/6`
 
 ---
 
@@ -222,7 +222,7 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-### Error: "Port 5173 is already in use"
+### Error: "Port 5174 is already in use"
 **Solución 1:** Cerrar otras aplicaciones en ese puerto
 **Solución 2:** Cambiar el puerto en `vite.config.js`:
 ```javascript
