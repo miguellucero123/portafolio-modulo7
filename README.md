@@ -2,6 +2,8 @@
 
 Aplicación web de tipo SPA (Single Page Application) para consulta de información meteorológica en Torres del Paine (circuitos W y O). El módulo actual incorpora autenticación, gestión de estado global con Vuex y rutas condicionadas por sesión.
 
+**Verificación frente al enunciado del Módulo 7:** [`RUBRICA_CUMPLIMIENTO.md`](./RUBRICA_CUMPLIMIENTO.md).
+
 ## Alcance
 
 | Área | Descripción |
@@ -51,12 +53,12 @@ El acceso sin sesión a rutas protegidas provoca redirección a `/login` con el 
 ## Instalación
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd modulo7_portafolio
+git clone https://github.com/miguellucero123/portafolio-modulo7.git
+cd portafolio-modulo7
 npm install
 ```
 
-Sustituya `<URL_DEL_REPOSITORIO>` por la URL del repositorio público correspondiente a su entrega.
+Ajuste la URL o el nombre de carpeta si el repositorio o el clon difieren.
 
 ## Ejecución en desarrollo
 
@@ -86,21 +88,14 @@ npm run preview
 
 ## Repositorio público
 
-Repositorio **dedicado al Módulo 7** (crear en GitHub y enlazar; instrucciones paso a paso en [`docs/GITHUB_SETUP_M7.md`](./docs/GITHUB_SETUP_M7.md)):
-
 `https://github.com/miguellucero123/portafolio-modulo7`
-
-Sustituya usuario y nombre del repositorio si utiliza otra convención. Hasta que el repositorio no exista en GitHub, ese enlace no será válido.
-
-Repositorio histórico del mismo código base (referencia): `https://github.com/miguellucero123/weather-frontend-m3`
 
 ## Documentación complementaria
 
-La carpeta `MODULO7_ENTREGA/` contiene la matriz de requisitos del módulo, el listado de dependencias npm y copias de los manifiestos `package.json` y `package-lock.json` para auditoría o despliegue reproducible.
-
-## Evolución del código (criterio de ingeniería)
-
-Las mejoras propuestas sobre el estado actual se documentan con enfoque de priorización, riesgo y límites respecto a la rúbrica en [`docs/MEJORAS_ENFOQUE_SENIOR.md`](./docs/MEJORAS_ENFOQUE_SENIOR.md). No sustituyen los entregables obligatorios del módulo; sirven como guía para iteraciones posteriores.
+| Recurso | Contenido |
+|---------|-----------|
+| [`MODULO7_ENTREGA/`](./MODULO7_ENTREGA/README.md) | Matriz de requisitos, dependencias npm, manifiestos |
+| [`docs/GITHUB_SETUP_M7.md`](./docs/GITHUB_SETUP_M7.md) | Creación del remoto y primer `push` |
 
 ## Resolución de incidencias (desarrollo local)
 

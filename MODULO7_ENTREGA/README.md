@@ -2,7 +2,9 @@
 
 Esta carpeta reúne **la documentación de requisitos**, el **listado de dependencias npm** y los **manifiestos** (`package.json` / `package-lock.json`) para reproducir el entorno del proyecto **ClimaTorre** sin ambigüedad.
 
-> El **código fuente** de la aplicación está en la raíz del repositorio (`src/`, `index.html`, `vite.config.js`, etc.). Aquí no se duplica todo el código: se documenta qué cumple la rúbrica y cómo instalar dependencias.
+La comprobación punto por punto frente al enunciado está en la raíz del repositorio: [`../RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md).
+
+El **código fuente** de la aplicación está en la raíz del repositorio (`src/`, `index.html`, `vite.config.js`, etc.). Aquí no se duplica todo el código: se documenta qué cumple la rúbrica y cómo instalar dependencias.
 
 ## Contenido
 
@@ -12,6 +14,7 @@ Esta carpeta reúne **la documentación de requisitos**, el **listado de depende
 | [02_REQUISITOS_RUBRICA.md](./02_REQUISITOS_RUBRICA.md) | Rúbrica M7 completa con criterio → evidencia en el proyecto |
 | [03_DEPENDENCIAS_NPM.md](./03_DEPENDENCIAS_NPM.md) | Paquetes directos y rol de cada uno respecto a la rúbrica |
 | [04_MAPA_CODIGO_REQUISITOS.md](./04_MAPA_CODIGO_REQUISITOS.md) | Rutas, store, servicios y vistas clave |
+| [05_OPCIONAL_MEJORAS_ENFOQUE_SENIOR.md](./05_OPCIONAL_MEJORAS_ENFOQUE_SENIOR.md) | Opcional: evolución del código tras la rúbrica (no exigido) |
 | `dependencias_manifiestos/` | Copia de `package.json` y `package-lock.json` para `npm ci` / `npm install` |
 | `scripts/` | Scripts para instalar dependencias desde la raíz del repo |
 

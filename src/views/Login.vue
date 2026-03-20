@@ -50,6 +50,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { LogIn } from 'lucide-vue-next';
+import { sanitizeRedirectPath } from '@utils/sanitizeRedirectPath.js';
 
 export default {
   name: 'LoginView',
@@ -74,8 +75,9 @@ export default {
         });
         const q = this.$route.query.redirect;
         const fromSession = sessionStorage.getItem('lastRoute');
-        const target =
+        const raw =
           (typeof q === 'string' && q) || fromSession || '/';
+        const target = sanitizeRedirectPath(raw);
         sessionStorage.removeItem('lastRoute');
         await this.$router.replace(target);
       } catch (e) {

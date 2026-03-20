@@ -70,11 +70,11 @@
           Módulo 7 Portafolio
         </p>
         <p class="footer-links">
-          <a href="https://github.com/miguellucero123/weather-frontend-m3" target="_blank">
+          <a href="https://github.com/miguellucero123/portafolio-modulo7" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
           <span class="separator">•</span>
-          <span>Torres del Paine, Chile 🇨🇱</span>
+          <span>Torres del Paine, Chile</span>
         </p>
       </div>
     </footer>

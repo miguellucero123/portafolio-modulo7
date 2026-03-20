@@ -125,15 +125,6 @@ export default createStore({
           favoriteIds: [...state.favoriteIds]
         };
       }
-    },
-    SET_FAVORITE_IDS(state, ids) {
-      state.favoriteIds = [...ids];
-      if (state.user) {
-        state.user = {
-          ...state.user,
-          favoriteIds: [...state.favoriteIds]
-        };
-      }
     }
   },
   actions: {

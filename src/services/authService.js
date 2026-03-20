@@ -1,6 +1,5 @@
 /**
- * Autenticación simulada en el front (API mock).
- * En producción se reemplazaría por llamadas Axios a un backend real.
+ * Autenticación simulada en el front (rúbrica: API simulada o Axios).
  */
 
 const REGISTERED_KEY = 'climatorre_registered_users';

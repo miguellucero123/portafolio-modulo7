@@ -90,6 +90,7 @@ router.beforeEach((to, from, next) => {
   document.title = to.meta.title || 'ClimaTorre - Torres del Paine';
 
   if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
+    // Tras el login, la vista Login valida `redirect` con sanitizeRedirectPath (solo rutas internas).
     next({
       name: 'Login',
       query: { redirect: to.fullPath }

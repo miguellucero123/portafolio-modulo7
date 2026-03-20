@@ -1,3 +1,9 @@
+# Opcional — Enfoque de mejoras posteriores a la rúbrica
+
+Este documento **no forma parte de los entregables mínimos** del Módulo 7. Documenta criterios de evolución opcional del código una vez cumplida la rúbrica.
+
+---
+
 # Enfoque de mejoras — criterio de ingeniería senior
 
 Este documento define **cómo** se plantean las evoluciones del proyecto: priorización, límites de riesgo y alineación con requisitos académicos. **No sustituye** las funcionalidades exigidas por la rúbrica (Vue, Vue Router, Vuex, flujo de autenticación simulado, rutas protegidas, personalización desde el store, documentación en README).
@@ -49,9 +55,8 @@ Orden sugerido para trabajo incremental sin bloquear la entrega académica:
 
 ### 3.4 Router y seguridad de navegación
 
-- **Problema:** el guard centralizado es correcto; falta documentación del orden de guards y del parámetro `redirect` para evitar regresiones.
-- **Dirección:** comentario breve en `router/index.js` sobre orden `meta.requiresAuth` vs `guestOnly`; validación de que `redirect` sea ruta interna (evitar open redirect si en el futuro el query viene de fuera).
-- **Criterio de aceptación:** comportamiento actual preservado; URL maliciosas no redirigen fuera del origen.
+- El parámetro `redirect` tras login se valida con `src/utils/sanitizeRedirectPath.js` en `Login.vue` y `Registro.vue` (rutas internas únicamente).
+- **Dirección adicional:** documentar en `router/index.js` el orden de guards (`requiresAuth` vs `guestOnly`).
 
 ### 3.5 Calidad automatizada
 

@@ -59,6 +59,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { UserPlus } from 'lucide-vue-next';
+import { sanitizeRedirectPath } from '@utils/sanitizeRedirectPath.js';
 
 export default {
   name: 'RegistroView',
@@ -84,8 +85,8 @@ export default {
           password: this.password
         });
         const q = this.$route.query.redirect;
-        const target = (typeof q === 'string' && q) || '/';
-        await this.$router.replace(target);
+        const raw = (typeof q === 'string' && q) || '/';
+        await this.$router.replace(sanitizeRedirectPath(raw));
       } catch (e) {
         this.error = e?.message || 'No se pudo completar el registro';
       } finally {
