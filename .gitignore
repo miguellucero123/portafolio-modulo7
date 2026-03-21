@@ -12,4 +12,7 @@ build/
 # Netlify CLI local
 .netlify/
 
+# ZIP de entrega (opcional; no versionar archivos grandes)
+portafolio-m7/*.zip
+
 .early.coverage

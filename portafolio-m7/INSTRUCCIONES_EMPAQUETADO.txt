@@ -1,0 +1,40 @@
+================================================================================
+  PORTAFOLIO MÓDULO 7 — Archivo ZIP para entrega académica
+================================================================================
+
+CONTENIDO ESPERADO DEL ZIP (código fuente)
+  - Carpeta src/ (Vue, router, store, vistas, servicios)
+  - index.html, vite.config.js, package.json, package-lock.json
+  - netlify.toml, public/
+  - README.md, RUBRICA_CUMPLIMIENTO.md
+  - docs/, MODULO7_ENTREGA/ (documentación y rúbrica)
+  - Archivos de configuración del proyecto (.gitignore, etc.)
+
+NO INCLUIR (se regeneran o son locales)
+  - node_modules/     → ejecutar "npm install" al descomprimir
+  - dist/               → ejecutar "npm run build" si se necesita build
+  - .git/               → opcional según indique el docente
+  - .netlify/, .vscode/ → entorno local
+
+GENERAR EL ZIP AUTOMÁTICAMENTE (Windows PowerShell)
+
+  Desde la raíz del repositorio (carpeta que contiene package.json):
+
+    .\scripts\empaquetar-portafolio-m7.ps1
+
+  El archivo se creará aquí:
+
+    portafolio-m7\PORTAFOLIO_M7_ENTREGA.zip
+
+GENERAR EL ZIP A MANO
+
+  Comprima la raíz del proyecto excluyendo las carpetas indicadas arriba,
+  o use "Enviar a → Carpeta comprimida" tras eliminar node_modules y dist
+  si ocupaban mucho espacio.
+
+VERIFICACIÓN TRAS DESCOMPRIMIR (quien corrige o compañero)
+
+  npm install
+  npm run dev
+
+================================================================================

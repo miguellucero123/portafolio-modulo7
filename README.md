@@ -4,6 +4,8 @@ Aplicación web de tipo SPA (Single Page Application) para consulta de informaci
 
 **Verificación frente al enunciado del Módulo 7:** [`RUBRICA_CUMPLIMIENTO.md`](./RUBRICA_CUMPLIMIENTO.md).
 
+**Entrega en ZIP:** carpeta [`portafolio-m7/`](./portafolio-m7/README.md) (instrucciones y script `scripts/empaquetar-portafolio-m7.ps1`).
+
 ## Alcance
 
 | Área | Descripción |
