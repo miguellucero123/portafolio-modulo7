@@ -17,5 +17,6 @@ portafolio-m7/*.zip
 
 # Copia "solo rúbrica M7" (generada localmente)
 RUBRICA_M7_CONTENIDO/entrega/
+RUBRICA_M7_CONTENIDO/*.zip
 
 .early.coverage

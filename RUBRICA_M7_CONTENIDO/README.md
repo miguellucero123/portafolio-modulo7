@@ -36,6 +36,8 @@ Se crea (o sobrescribe) **`RUBRICA_M7_CONTENIDO/entrega/`** con el árbol anteri
 
 La carpeta `entrega/` está en `.gitignore` para no duplicar el proyecto en Git.
 
+Tras ejecutar el script, puede generarse localmente el archivo **`ENTREGA_M7_RUBRICA.zip`** (misma carpeta `RUBRICA_M7_CONTENIDO/`, sin `node_modules` ni `dist` dentro del ZIP). Ese `.zip` también está ignorado por Git.
+
 ## Ver documentación detallada
 
 - [LISTADO_ARCHIVOS_RUBRICA_M7.md](./LISTADO_ARCHIVOS_RUBRICA_M7.md)
