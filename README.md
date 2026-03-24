@@ -6,6 +6,8 @@ Aplicación web de tipo SPA (Single Page Application) para consulta de informaci
 
 **Entrega en ZIP:** carpeta [`portafolio-m7/`](./portafolio-m7/README.md) (instrucciones y script `scripts/empaquetar-portafolio-m7.ps1`).
 
+**Solo requisitos rúbrica M7 (copia mínima del proyecto):** [`RUBRICA_M7_CONTENIDO/`](./RUBRICA_M7_CONTENIDO/README.md) y script `scripts/extraer-rubrica-m7.ps1` (genera `RUBRICA_M7_CONTENIDO/entrega/` sin código legacy ni clones).
+
 ## Alcance
 
 | Área | Descripción |

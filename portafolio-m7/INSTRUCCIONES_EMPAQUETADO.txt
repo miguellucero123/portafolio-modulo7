@@ -16,7 +16,16 @@ NO INCLUIR (se regeneran o son locales)
   - .git/               → opcional según indique el docente
   - .netlify/, .vscode/ → entorno local
 
-GENERAR EL ZIP AUTOMÁTICAMENTE (Windows PowerShell)
+COPIA SOLO RÚBRICA M7 (sin legacy / clones)
+
+  Desde la raíz del repositorio:
+
+    .\scripts\extraer-rubrica-m7.ps1
+
+  Genera la carpeta RUBRICA_M7_CONTENIDO\entrega\ con el proyecto mínimo.
+  Luego puede comprimir solo esa carpeta en un ZIP para el docente.
+
+GENERAR EL ZIP (proyecto completo en el repo)
 
   Desde la raíz del repositorio (carpeta que contiene package.json):
 
