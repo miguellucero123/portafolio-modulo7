@@ -92,7 +92,7 @@ Resumen: conecte el repositorio en [app.netlify.com](https://app.netlify.com), d
 | Vue | 3.x |
 | Vue Router | 4.x |
 | Vuex | 4.x |
-| Vite | 5.x |
+| Vite | 6.x |
 | Iconografía | Lucide Vue Next |
 | Estilos | CSS / SCSS (según rutas del proyecto) |
 
