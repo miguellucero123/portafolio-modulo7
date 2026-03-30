@@ -18,6 +18,7 @@ No forma parte del entregable mínimo M7:
 | Aplicación Vue (M6 base + M7) | `src/`, `index.html`, `vite.config.js`, `public/` |
 | Dependencias y build | `package.json`, `package-lock.json`, `netlify.toml`, `.gitignore` |
 | Entrega académica | `README.md`, `RUBRICA_CUMPLIMIENTO.md` |
+| Proyecto 2 (revisión y cierre de portafolio) | `proyecto_2/` |
 | Documentación M7 requerida | `MODULO7_ENTREGA/` (sin el archivo 05 opcional) |
 | Utilidad | `docs/DEPLOY_NETLIFY.md`, `docs/GITHUB_SETUP_M7.md` |
 | Scripts de empaquetado | `scripts/` (empaquetar + extraer) |
