@@ -41,6 +41,8 @@ Copy-FileTo '.gitignore' '.gitignore'
 Copy-FileTo 'README.md' 'README.md'
 Copy-FileTo 'RUBRICA_CUMPLIMIENTO.md' 'RUBRICA_CUMPLIMIENTO.md'
 
+Copy-Dir 'proyecto_2'
+
 Copy-Dir 'MODULO7_ENTREGA'
 $opt05 = Join-Path $dest 'MODULO7_ENTREGA\05_OPCIONAL_MEJORAS_ENFOQUE_SENIOR.md'
 if (Test-Path $opt05) { Remove-Item $opt05 -Force }

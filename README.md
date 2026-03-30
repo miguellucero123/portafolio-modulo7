@@ -8,6 +8,8 @@ Aplicación web de tipo SPA (Single Page Application) para consulta de informaci
 
 **Solo requisitos rúbrica M7 (copia mínima del proyecto):** [`RUBRICA_M7_CONTENIDO/`](./RUBRICA_M7_CONTENIDO/README.md) y script `scripts/extraer-rubrica-m7.ps1` (genera `RUBRICA_M7_CONTENIDO/entrega/` sin código legacy ni clones).
 
+**Proyecto 2 (revisión, mejora, feedback y cierre de portafolio):** [`proyecto_2/`](./proyecto_2/README.md).
+
 ## Alcance
 
 | Área | Descripción |
