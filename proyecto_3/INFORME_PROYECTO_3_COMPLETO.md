@@ -72,7 +72,7 @@ El **Módulo 7** exige una SPA **Vue 3** con **Vue Router** y **Vuex**, **autent
 | `RUBRICA_CUMPLIMIENTO.md` | Auditoría **criterio → evidencia** (propósito, objetivos, alcance, requisitos funcionales/técnicos, entregables). Es la referencia principal para “qué cumple” el portafolio M7. |
 | `MODULO7_ENTREGA/README.md` | Matriz de requisitos, dependencias npm, mapa código–requisitos; carpeta de entrega académica junto al código. |
 | `portafolio_8/README.md` | Producto terminado (M7 + rúbrica final integrada); síntesis en `01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`. |
-| `README.md` (raíz) | Instalación, ejecución (puerto **5174**), rutas `/login`, `/registro`, `/favoritos`, `/preferencias-clima`, credenciales demo, despliegue Netlify. |
+| `README.md` (raíz) | Resumen e inicio rápido; detalle en `docs/README_DOCUMENTACION.md` (rutas, credenciales, Netlify, etc.). |
 | `docs/DEPLOY_NETLIFY.md` | Evidencia de **difusión** del portafolio vía hosting. |
 | `scripts/extraer-rubrica-m7.ps1` | Genera copia mínima alineada a rúbrica en `RUBRICA_M7_CONTENIDO/entrega/`. |
 | `scripts/empaquetar-portafolio-m7.ps1` | Empaqueta el proyecto para entrega en ZIP (`portafolio-m7/`). |
