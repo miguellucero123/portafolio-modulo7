@@ -4,7 +4,16 @@ Documentación de **cierre de ciclo** del producto **ClimaTorre** (SPA Vue 3, Vu
 
 **Ámbito del repositorio:** `portafolio-modulo7` (GitHub: `miguellucero123/portafolio-modulo7`).
 
-## Estructura de esta carpeta
+## Informe único para Word (Parte A + Parte B)
+
+El archivo **[INFORME_PROYECTO_2_COMPLETO.md](./INFORME_PROYECTO_2_COMPLETO.md)** incluye:
+
+- **Parte A:** errores corregidos, mejoras implementadas y feedback (secciones típicas del informe en Word).
+- **Parte B:** el mismo contenido que los documentos `01`–`04` y el anexo de esta carpeta.
+
+Para obtener **.docx:** abrir ese archivo en Microsoft Word y guardar como Word, o ejecutar `pandoc INFORME_PROYECTO_2_COMPLETO.md -o INFORME_PROYECTO_2_COMPLETO.docx` desde esta carpeta. En el repositorio suele incluirse **`INFORME_PROYECTO_2_COMPLETO.docx`** generado con Pandoc; regenérelo si edita el `.md`.
+
+## Estructura de esta carpeta (archivos por tema)
 
 | Documento | Contenido |
 |-----------|-----------|

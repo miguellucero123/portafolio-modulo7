@@ -4,11 +4,15 @@ Aplicación web de tipo SPA (Single Page Application) para consulta de informaci
 
 **Verificación frente al enunciado del Módulo 7:** [`RUBRICA_CUMPLIMIENTO.md`](./RUBRICA_CUMPLIMIENTO.md).
 
+**Portafolio 8 (producto terminado — integra Portafolio 7 + rúbrica final API/Vuex clima, estadísticas, alertas, entregables):** carpeta [`portafolio_8/`](./portafolio_8/README.md) — leer primero [`01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`](./portafolio_8/01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md); matriz [`RUBRICA_CUMPLIMIENTO_PORTAFOLIO_8.md`](./portafolio_8/RUBRICA_CUMPLIMIENTO_PORTAFOLIO_8.md).
+
 **Entrega en ZIP:** carpeta [`portafolio-m7/`](./portafolio-m7/README.md) (instrucciones y script `scripts/empaquetar-portafolio-m7.ps1`).
 
 **Solo requisitos rúbrica M7 (copia mínima del proyecto):** [`RUBRICA_M7_CONTENIDO/`](./RUBRICA_M7_CONTENIDO/README.md) y script `scripts/extraer-rubrica-m7.ps1` (genera `RUBRICA_M7_CONTENIDO/entrega/` sin código legacy ni clones).
 
 **Proyecto 2 (revisión, mejora, feedback y cierre de portafolio):** [`proyecto_2/`](./proyecto_2/README.md).
+
+**Proyecto 3 (portafolio profesional, herramientas digitales y reflexión):** [`proyecto_3/`](./proyecto_3/README.md).
 
 ## Alcance
 
@@ -20,18 +24,26 @@ Aplicación web de tipo SPA (Single Page Application) para consulta de informaci
 
 ## Modelo de usuario y persistencia
 
-El estado de autenticación y las preferencias se gestionan en Vuex (`src/store/index.js`). La persistencia en navegador utiliza las claves indicadas en la tabla siguiente.
+El estado de autenticación, las preferencias y el **clima** (lista de lugares, carga, errores, lugar seleccionado) se gestionan en Vuex (`src/store/index.js`). La persistencia en navegador utiliza las claves indicadas en la tabla siguiente.
 
 | Campo en el estado | Contenido |
 |--------------------|-----------|
 | Identidad | `id`, `nombre`, `email` (sin contraseña en memoria de aplicación) |
 | Favoritos | `favoriteIds` (identificadores numéricos de lugares) |
 | Preferencias | `tempUnit` (Celsius o Fahrenheit), `theme` (claro u oscuro) |
+| Clima (API) | `weatherLugares`, `weatherLoading`, `weatherError`, `weatherLastUpdate`, `selectedLugarId` |
 
 | Clave `localStorage` | Uso |
 |----------------------|-----|
 | `climatorre_vuex_session` | Sesión de usuario autenticado |
 | `climatorre_guest_*` / `tempUnit` / `theme` | Preferencias de invitado y compatibilidad |
+
+## Rutas principales (clima y navegación)
+
+| Ruta | Función |
+|------|---------|
+| `/` | **Home:** listado de lugares con clima actual |
+| `/lugar/:id` | **Detalle:** pronóstico por días, estadísticas de la semana, alertas meteorológicas |
 
 ## Rutas de autenticación y áreas restringidas
 
@@ -65,6 +77,10 @@ npm install
 ```
 
 Ajuste la URL o el nombre de carpeta si el repositorio o el clon difieren.
+
+## Variables de entorno y API de clima
+
+La aplicación consume **Open-Meteo** mediante **`fetch`** (sin dependencia de Axios) desde `src/services/weatherService.js`. **No se requiere API key** ni archivo `.env` para la configuración por defecto. Si cambia a un proveedor que exija clave, defina las variables en `.env` según ese servicio y documente aquí los nombres de variables y pasos de configuración.
 
 ## Ejecución en desarrollo
 
@@ -107,6 +123,8 @@ Resumen: conecte el repositorio en [app.netlify.com](https://app.netlify.com), d
 | Recurso | Contenido |
 |---------|-----------|
 | [`MODULO7_ENTREGA/`](./MODULO7_ENTREGA/README.md) | Matriz de requisitos, dependencias npm, manifiestos |
+| [`proyecto_3/`](./proyecto_3/README.md) | Proyecto 3: portafolio profesional, evidencias y reflexión |
+| [`portafolio_8/`](./portafolio_8/README.md) | Portafolio 8: cumplimiento rúbrica integrada final |
 | [`docs/GITHUB_SETUP_M7.md`](./docs/GITHUB_SETUP_M7.md) | Creación del remoto y primer `push` |
 
 ## Resolución de incidencias (desarrollo local)

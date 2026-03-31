@@ -1,11 +1,24 @@
 /**
- * Vuex: autenticación, preferencias y favoritos (Módulo 7)
+ * Vuex: clima y pronóstico (portafolio final / rúbrica integrada) + auth, preferencias y favoritos (Módulo 7)
  */
 
 import { createStore } from 'vuex';
 import authService from '@services/authService';
+import { lugares as staticLugares } from '@/data/lugares.js';
 
 const SESSION_KEY = 'climatorre_vuex_session';
+
+function cloneStaticLugares() {
+  return staticLugares.map((l) => JSON.parse(JSON.stringify(l)));
+}
+
+const weatherState = {
+  weatherLugares: cloneStaticLugares(),
+  weatherLoading: false,
+  weatherError: null,
+  weatherLastUpdate: null,
+  selectedLugarId: null
+};
 
 function loadPersistedSession() {
   try {
@@ -44,12 +57,14 @@ const initialState = persisted?.user
       },
       favoriteIds: Array.isArray(persisted.favoriteIds)
         ? [...persisted.favoriteIds]
-        : [...(persisted.user.favoriteIds || [])]
+        : [...(persisted.user.favoriteIds || [])],
+      ...structuredClone(weatherState)
     }
   : {
       user: null,
       preferences: guestPrefsFromStorage(),
-      favoriteIds: []
+      favoriteIds: [],
+      ...structuredClone(weatherState)
     };
 
 function persistState(state) {
@@ -85,7 +100,19 @@ export default createStore({
     currentUser: (s) => s.user,
     preferences: (s) => s.preferences,
     favoriteIds: (s) => s.favoriteIds,
-    isFavorite: (s) => (placeId) => s.favoriteIds.includes(Number(placeId))
+    isFavorite: (s) => (placeId) => s.favoriteIds.includes(Number(placeId)),
+    weatherLugares: (s) => s.weatherLugares,
+    weatherLoading: (s) => s.weatherLoading,
+    weatherError: (s) => s.weatherError,
+    weatherLastUpdate: (s) => s.weatherLastUpdate,
+    selectedLugarId: (s) => s.selectedLugarId,
+    lugarByWeatherId: (s) => (id) =>
+      s.weatherLugares.find((l) => String(l.id) === String(id)),
+    lugarSeleccionadoPronostico: (s) => {
+      if (s.selectedLugarId == null) return null;
+      const lugar = s.weatherLugares.find((l) => l.id === Number(s.selectedLugarId));
+      return lugar?.pronosticoSemanal ?? null;
+    }
   },
   mutations: {
     SET_USER(state, user) {
@@ -125,6 +152,21 @@ export default createStore({
           favoriteIds: [...state.favoriteIds]
         };
       }
+    },
+    SET_WEATHER_LUGARES(state, lugares) {
+      state.weatherLugares = lugares;
+    },
+    SET_WEATHER_LOADING(state, val) {
+      state.weatherLoading = val;
+    },
+    SET_WEATHER_ERROR(state, err) {
+      state.weatherError = err;
+    },
+    SET_WEATHER_LAST_UPDATE(state, date) {
+      state.weatherLastUpdate = date;
+    },
+    SET_SELECTED_LUGAR_ID(state, id) {
+      state.selectedLugarId = id == null ? null : Number(id);
     }
   },
   actions: {
@@ -174,6 +216,31 @@ export default createStore({
     toggleFavorite({ commit, state }, placeId) {
       commit('TOGGLE_FAVORITE', placeId);
       if (state.user) persistState(state);
+    },
+    async fetchWeather({ commit }, force = false) {
+      commit('SET_WEATHER_LOADING', true);
+      commit('SET_WEATHER_ERROR', null);
+      try {
+        const { weatherService } = await import('@/services/weatherService.js');
+        const data = await weatherService.fetchAllWeather(!!force);
+        if (data && data.length > 0) {
+          commit('SET_WEATHER_LUGARES', data);
+        }
+        commit('SET_WEATHER_LAST_UPDATE', weatherService.getLastUpdate());
+      } catch (e) {
+        console.error('fetchWeather:', e);
+        commit('SET_WEATHER_ERROR', e);
+        try {
+          const cached = localStorage.getItem('weather_data_cache');
+          if (cached) {
+            commit('SET_WEATHER_LUGARES', JSON.parse(cached));
+          }
+        } catch {
+          /* ignore */
+        }
+      } finally {
+        commit('SET_WEATHER_LOADING', false);
+      }
     }
   }
 });

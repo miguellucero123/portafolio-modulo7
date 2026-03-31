@@ -19,6 +19,8 @@ No forma parte del entregable mínimo M7:
 | Dependencias y build | `package.json`, `package-lock.json`, `netlify.toml`, `.gitignore` |
 | Entrega académica | `README.md`, `RUBRICA_CUMPLIMIENTO.md` |
 | Proyecto 2 (revisión y cierre de portafolio) | `proyecto_2/` |
+| Proyecto 3 (portafolio profesional y evidencias) | `proyecto_3/` |
+| Portafolio 8 (rúbrica integrada final) | `portafolio_8/` |
 | Documentación M7 requerida | `MODULO7_ENTREGA/` (sin el archivo 05 opcional) |
 | Utilidad | `docs/DEPLOY_NETLIFY.md`, `docs/GITHUB_SETUP_M7.md` |
 | Scripts de empaquetado | `scripts/` (empaquetar + extraer) |

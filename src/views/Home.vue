@@ -22,6 +22,13 @@
         </div>
       </header>
 
+      <div v-if="error" class="weather-error-banner glass-card" role="alert">
+        <p>
+          No se pudieron actualizar los datos desde la API. Si hay datos en caché, se siguen mostrando.
+          Puede reintentar con «Actualizar ahora».
+        </p>
+      </div>
+
       <!-- Barra de búsqueda y filtros -->
       <section class="filters-section glass-card">
         <div class="search-bar">
@@ -259,6 +266,18 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+.weather-error-banner {
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid #e11d48;
+  background: rgba(225, 29, 72, 0.08);
+}
+
+.weather-error-banner p {
+  margin: 0;
+  line-height: 1.5;
 }
 
 /* Header */

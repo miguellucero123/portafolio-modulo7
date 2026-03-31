@@ -89,6 +89,22 @@
           </div>
         </section>
 
+        <!-- Alertas meteorológicas (reglas simples — rúbrica portafolio final) -->
+        <section
+          v-if="alertasMeteorologicas.length"
+          class="alertas-meteo-section glass-card"
+          aria-label="Alertas meteorológicas"
+        >
+          <h2 class="section-title">
+            <AlertTriangle :size="28" class="alert-icon" /> Alertas meteorológicas
+          </h2>
+          <ul class="alertas-meteo-list">
+            <li v-for="(texto, idx) in alertasMeteorologicas" :key="idx" role="status">
+              {{ texto }}
+            </li>
+          </ul>
+        </section>
+
         <!-- Estadísticas de la semana -->
         <section class="estadisticas-section">
           <h2 class="section-title"><BarChart2 :size="28" /> Estadísticas de la Semana</h2>
@@ -442,6 +458,35 @@ export default {
     resumenPronostico() {
       return generarResumenPronostico(this.estadisticas);
     },
+    /** Reglas explícitas: semana lluviosa / ola de calor (presentación fija en UI) */
+    alertasMeteorologicas() {
+      if (!this.estadisticas || !this.lugar?.pronosticoSemanal) return [];
+      const out = [];
+      const d = this.estadisticas.diasPorEstado || {};
+      const diasLluviosos =
+        (d['Lluvioso'] || 0) +
+        (d['Chubascos'] || 0) +
+        (d['Llovizna'] || 0) +
+        (d['Chubascos Fuertes'] || 0);
+      if (diasLluviosos >= 4 || this.estadisticas.precipitacionPromedio >= 55) {
+        out.push(
+          'Alerta: semana con alta probabilidad de precipitación. Planifica equipo impermeable y cruces de río.'
+        );
+      }
+      const diasCalurosos = this.lugar.pronosticoSemanal.filter((dia) => dia.max >= 22).length;
+      if (diasCalurosos >= 3 || this.estadisticas.tempMax >= 26) {
+        out.push(
+          'Alerta: varios días con temperaturas elevadas. Prioriza hidratación, sombra y protector solar.'
+        );
+      }
+      if (
+        this.estadisticas.vientoPromedio >= 45 &&
+        !out.some((x) => x.includes('precipitación'))
+      ) {
+        out.push('Alerta: viento sostenido fuerte en el periodo. Precaución en zonas expuestas.');
+      }
+      return out;
+    },
     sensacionTermica() {
       if (!this.lugar || !this.estadisticas) return 0;
       // Usamos el viento promedio de la semana como aproximación si no hay dato actual de viento
@@ -585,14 +630,19 @@ export default {
   mounted() {
     // Scroll to top al montar el componente
     window.scrollTo(0, 0);
-    
+
+    this.$store.commit('SET_SELECTED_LUGAR_ID', Number(this.id));
+
     // Asegurar que tenemos datos actualizados
     this.fetchWeather();
-    
+
     // Actualizar título de la página
     if (this.lugar) {
       document.title = `${this.lugar.nombre} - ClimaTorre`;
     }
+  },
+  beforeUnmount() {
+    this.$store.commit('SET_SELECTED_LUGAR_ID', null);
   }
 };
 </script>
@@ -601,6 +651,28 @@ export default {
 .detalle-view {
   min-height: 100vh;
   padding-bottom: 2rem;
+}
+
+.alertas-meteo-section {
+  margin-bottom: 1.75rem;
+  padding: 1.25rem 1.5rem;
+  border-left: 4px solid #f59e0b;
+}
+
+.alertas-meteo-section .alert-icon {
+  color: #f59e0b;
+  vertical-align: middle;
+}
+
+.alertas-meteo-list {
+  margin: 0.75rem 0 0 1.25rem;
+  padding: 0;
+  list-style: disc;
+}
+
+.alertas-meteo-list li {
+  margin-bottom: 0.5rem;
+  line-height: 1.45;
 }
 
 .container {
