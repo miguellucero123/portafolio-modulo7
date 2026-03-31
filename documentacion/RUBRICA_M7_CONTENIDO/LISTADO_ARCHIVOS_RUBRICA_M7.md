@@ -37,6 +37,6 @@
 
 ## No incluidos en la copia “solo rúbrica”
 
-- Código legacy en raíz (`js/`, `scss/`, `css/` sin uso en la SPA Vite actual).
-- Clones y respaldos (`CLON_PROYECTO_ORIGINAL/`, `backup/`).
-- Documentación opcional post-rúbrica: `MODULO7_ENTREGA/05_OPCIONAL_*.md`.
+- Código legacy agrupado en **`legacy/`** (`js/`, `scss/`, `css/` sin uso en la SPA Vite actual).
+- Clones y respaldos en **`legacy/`** (`CLON_PROYECTO_ORIGINAL/`, `backup/`).
+- Documentación opcional post-rúbrica: `documentacion/MODULO7_ENTREGA/05_OPCIONAL_*.md`.

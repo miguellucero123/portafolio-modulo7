@@ -4,7 +4,7 @@ Documentación académica para el **Proyecto 3**: aplicación de buenas práctic
 
 **Ámbito del repositorio:** `portafolio-modulo7` (GitHub: `miguellucero123/portafolio-modulo7`).
 
-**Condición de la documentación `proyecto_3/`:** el material de esta carpeta (incluida accesibilidad e inclusión) **complementa** el portafolio; el cumplimiento **obligatorio** sigue alineado a las **rúbricas** del curso ([`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md) para el Módulo 7). Las mejoras opcionales no deben **sustituir** ni **comprometer** esos requisitos.
+**Condición de la documentación `proyecto_3/`:** el material de esta carpeta (incluida accesibilidad e inclusión) **complementa** el portafolio; el cumplimiento **obligatorio** sigue alineado a las **rúbricas** del curso ([`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md) para el Módulo 7). Las mejoras opcionales no deben **sustituir** ni **comprometer** esos requisitos.
 
 ## Informe único para Word (Parte A + Parte B)
 

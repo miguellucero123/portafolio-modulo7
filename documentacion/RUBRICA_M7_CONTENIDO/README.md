@@ -6,9 +6,9 @@ Esta carpeta documenta y permite **generar** una copia del proyecto que incluye 
 
 No forma parte del entregable mínimo M7:
 
-- Carpetas `CLON_PROYECTO_ORIGINAL/`, `backup/`, `js/`, `css/`, `scss/` en la raíz (código y estilos **legacy** HTML/JS, no usados por la SPA Vite).
-- Archivos sueltos antiguos: `index-old.html`, `*.gpx`, `promt.txt`, guías M5/M6 sueltas, etc.
-- `MODULO7_ENTREGA/05_OPCIONAL_MEJORAS_ENFOQUE_SENIOR.md` (material opcional posterior a la rúbrica).
+- Carpeta **`legacy/`** (antes dispersa en la raíz): `CLON_PROYECTO_ORIGINAL/`, `backup/`, `js/`, `css/`, `scss/`, código y estilos **legacy** HTML/JS no usados por la SPA Vite.
+- Archivos sueltos antiguos en `legacy/`: `index-old.html`, `*.gpx`, `promt.txt`, guías M5/M6 sueltas, etc.
+- `documentacion/MODULO7_ENTREGA/05_OPCIONAL_MEJORAS_ENFOQUE_SENIOR.md` (material opcional posterior a la rúbrica).
 - `node_modules/`, `dist/`, `.git/` (se excluyen siempre; tras descomprimir: `npm install`).
 
 ## Qué sí se incluye (copia generada)
@@ -35,11 +35,11 @@ Desde la **raíz del repositorio**:
 .\scripts\extraer-rubrica-m7.ps1
 ```
 
-Se crea (o sobrescribe) **`RUBRICA_M7_CONTENIDO/entrega/`** con el árbol anterior. Luego puede comprimir solo esa carpeta en un ZIP para el docente.
+Se crea (o sobrescribe) **`documentacion/RUBRICA_M7_CONTENIDO/entrega/`** con el árbol anterior. Luego puede comprimir solo esa carpeta en un ZIP para el docente.
 
 La carpeta `entrega/` está en `.gitignore` para no duplicar el proyecto en Git.
 
-Tras ejecutar el script, puede generarse localmente el archivo **`ENTREGA_M7_RUBRICA.zip`** (misma carpeta `RUBRICA_M7_CONTENIDO/`, sin `node_modules` ni `dist` dentro del ZIP). Ese `.zip` también está ignorado por Git.
+Tras ejecutar el script, puede generarse localmente el archivo **`ENTREGA_M7_RUBRICA.zip`** (misma carpeta `documentacion/RUBRICA_M7_CONTENIDO/`, sin `node_modules` ni `dist` dentro del ZIP). Ese `.zip` también está ignorado por Git.
 
 ## Ver documentación detallada
 

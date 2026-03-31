@@ -2,7 +2,7 @@
 
 Esta carpeta reúne **la documentación de requisitos**, el **listado de dependencias npm** y los **manifiestos** (`package.json` / `package-lock.json`) para reproducir el entorno del proyecto **ClimaTorre** sin ambigüedad.
 
-La comprobación punto por punto frente al enunciado está en la raíz del repositorio: [`../RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md).
+La comprobación punto por punto frente al enunciado está en la raíz del repositorio: [`../../RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md).
 
 El **código fuente** de la aplicación está en la raíz del repositorio (`src/`, `index.html`, `vite.config.js`, etc.). Aquí no se duplica todo el código: se documenta qué cumple la rúbrica y cómo instalar dependencias.
 

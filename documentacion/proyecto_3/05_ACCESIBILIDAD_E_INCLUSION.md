@@ -2,7 +2,7 @@
 
 Este documento forma parte del **Proyecto 3** y describe cómo **complementar** el portafolio digital (**ClimaTorre**) con una perspectiva **inclusiva**, orientada a que **personas ciegas o con baja visión** y **personas sordas o con hipoacusia** puedan acceder y usar el producto de forma más equitativa. Es material de reflexión y planificación; la implementación técnica evoluciona en el código (`src/`).
 
-**Prioridad frente a las rúbricas:** las mejoras aquí descritas son **opcionales** y **no sustituyen** el cumplimiento de las rúbricas del curso. El criterio vinculante sigue siendo el documentado en **[`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md)** (Módulo 7) y lo que exija cada asignatura. Cualquier complemento (accesibilidad, textos adicionales, anexos) debe **mantener intactos** los requisitos ya cumplidos; si hubiera tensión entre una mejora extra y un ítem de rúbrica, **prevalece la rúbrica**.
+**Prioridad frente a las rúbricas:** las mejoras aquí descritas son **opcionales** y **no sustituyen** el cumplimiento de las rúbricas del curso. El criterio vinculante sigue siendo el documentado en **[`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md)** (Módulo 7) y lo que exija cada asignatura. Cualquier complemento (accesibilidad, textos adicionales, anexos) debe **mantener intactos** los requisitos ya cumplidos; si hubiera tensión entre una mejora extra y un ítem de rúbrica, **prevalece la rúbrica**.
 
 ---
 

@@ -68,5 +68,5 @@ Auditoría frente a los criterios **explícitos** del enunciado. Referencia de i
 ## Notas de revisión (implementación actual)
 
 - Redirección post-login: validación de ruta interna en `src/utils/sanitizeRedirectPath.js` (uso en `Login.vue` y `Registro.vue`).
-- Documentación opcional no sustitutiva de la rúbrica: `MODULO7_ENTREGA/05_OPCIONAL_MEJORAS_ENFOQUE_SENIOR.md`.
-- Guía de repositorio Git: `docs/GITHUB_SETUP_M7.md`.
+- Documentación opcional no sustitutiva de la rúbrica: `documentacion/MODULO7_ENTREGA/05_OPCIONAL_MEJORAS_ENFOQUE_SENIOR.md`.
+- Guía de repositorio Git: `documentacion/tecnico/GITHUB_SETUP_M7.md`.

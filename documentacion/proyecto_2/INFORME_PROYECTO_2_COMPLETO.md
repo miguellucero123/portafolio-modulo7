@@ -58,7 +58,7 @@ Este documento reúne **(A)** las secciones solicitadas para entrega en Word y *
 |------|--------------------------|
 | Login sin bucles incorrectos | Guards `requiresAuth` / `guestOnly` y `redirect` sanitizado. |
 | Dependencias sin vulnerabilidades críticas al entregar | Vite 6 y `npm audit` limpio. |
-| Portafolio desplegable | Documentación Netlify en `docs/DEPLOY_NETLIFY.md`. |
+| Portafolio desplegable | Documentación Netlify en `documentacion/tecnico/DEPLOY_NETLIFY.md`. |
 | Trazabilidad frente a la rúbrica | `RUBRICA_CUMPLIMIENTO.md` y `MODULO7_ENTREGA/`. |
 
 ---
@@ -157,7 +157,7 @@ El producto es **coherente con su propósito académico y portafolio** y **prese
 | **Código muerto / comentarios** en auth | Comentario alineado a rúbrica (mock permitido) | `src/services/authService.js` |
 | **Enlace GitHub** en pie de página desactualizado | `App.vue` apunta a `portafolio-modulo7` | `src/App.vue` |
 | **Vulnerabilidades** de dependencias (`esbuild`, `rollup`, `immutable`) | `npm audit fix` + subida a **Vite 6** | `package.json`, `package-lock.json` |
-| **Duplicación** de entrega en repo | Carpetas `portafolio-m7`, `RUBRICA_M7_CONTENIDO` con scripts de empaquetado | `scripts/`, documentación |
+| **Duplicación** de entrega en repo | Carpetas `documentacion/portafolio-m7`, `documentacion/RUBRICA_M7_CONTENIDO` con scripts de empaquetado | `scripts/`, documentación |
 
 #### 2.2 Mejoras de usabilidad y presentación
 
@@ -229,7 +229,7 @@ Las siguientes mejoras son **típicas** de retroalimentación en proyectos simil
 |------------------|--------------------------|
 | “El login debe redirigir sin volver a login en bucle” | Guard `requiresAuth` + `guestOnly` + `redirect` sanitizado. |
 | “Las dependencias no deben mostrar vulnerabilidades graves al entregar” | Actualización a Vite 6 y `npm audit` limpio. |
-| “El portafolio debe poder desplegarse” | Netlify documentado (`docs/DEPLOY_NETLIFY.md`). |
+| “El portafolio debe poder desplegarse” | Netlify documentado (`documentacion/tecnico/DEPLOY_NETLIFY.md`). |
 | “La entrega debe ser trazable frente a la rúbrica” | `RUBRICA_CUMPLIMIENTO.md` y carpeta `MODULO7_ENTREGA/`. |
 
 ---
@@ -277,8 +277,8 @@ No implica “sin deuda técnica”, sino **deuda conocida y priorizada** (ver a
 | Artefacto | Ubicación |
 |-----------|-----------|
 | Código fuente | `src/`, raíz del proyecto |
-| ZIP “solo rúbrica” (opcional) | Script `scripts/extraer-rubrica-m7.ps1` → `RUBRICA_M7_CONTENIDO/entrega/` |
-| ZIP completo (opcional) | `scripts/empaquetar-portafolio-m7.ps1` → `portafolio-m7/` |
+| ZIP “solo rúbrica” (opcional) | Script `scripts/extraer-rubrica-m7.ps1` → `documentacion/RUBRICA_M7_CONTENIDO/entrega/` |
+| ZIP completo (opcional) | `scripts/empaquetar-portafolio-m7.ps1` → `documentacion/portafolio-m7/` |
 
 #### 4.4 Mantenimiento posterior al curso
 

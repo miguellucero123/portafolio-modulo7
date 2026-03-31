@@ -10,13 +10,13 @@ El **Módulo 7** exige una SPA **Vue 3** con **Vue Router** y **Vuex**, **autent
 
 | Recurso en el repo | Contenido relevante |
 |--------------------|---------------------|
-| [`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md) | Auditoría **criterio → evidencia** (propósito, objetivos, alcance, requisitos funcionales/técnicos, entregables). Es la referencia principal para “qué cumple” el portafolio M7. |
+| [`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md) | Auditoría **criterio → evidencia** (propósito, objetivos, alcance, requisitos funcionales/técnicos, entregables). Es la referencia principal para “qué cumple” el portafolio M7. |
 | [`MODULO7_ENTREGA/`](../MODULO7_ENTREGA/README.md) | Matriz de requisitos, dependencias npm, mapa código–requisitos; carpeta de entrega académica junto al código. |
 | [`portafolio_8/`](../portafolio_8/README.md) | **Producto terminado** (integra M7 + rúbrica final clima/Vuex/estadísticas/alertas): [`01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`](../portafolio_8/01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md) |
-| [`README.md`](../README.md) (raíz) | Vista mínima en GitHub; guía completa en [`docs/README_DOCUMENTACION.md`](../docs/README_DOCUMENTACION.md) (rutas, Vuex, Netlify, credenciales demo). |
-| [`docs/DEPLOY_NETLIFY.md`](../docs/DEPLOY_NETLIFY.md) | Evidencia de **difusión** del portafolio vía hosting. |
-| [`scripts/extraer-rubrica-m7.ps1`](../scripts/extraer-rubrica-m7.ps1) | Genera copia mínima alineada a rúbrica en `RUBRICA_M7_CONTENIDO/entrega/`. |
-| [`scripts/empaquetar-portafolio-m7.ps1`](../scripts/empaquetar-portafolio-m7.ps1) | Empaqueta el proyecto para entrega en ZIP (`portafolio-m7/`). |
+| [`README.md`](../../README.md) (raíz) | Vista mínima en GitHub; guía completa en [`README_DOCUMENTACION.md`](../tecnico/README_DOCUMENTACION.md) (rutas, Vuex, Netlify, credenciales demo). |
+| [`DEPLOY_NETLIFY.md`](../tecnico/DEPLOY_NETLIFY.md) | Evidencia de **difusión** del portafolio vía hosting. |
+| [`extraer-rubrica-m7.ps1`](../../scripts/extraer-rubrica-m7.ps1) | Genera copia mínima alineada a rúbrica en `documentacion/RUBRICA_M7_CONTENIDO/entrega/`. |
+| [`empaquetar-portafolio-m7.ps1`](../../scripts/empaquetar-portafolio-m7.ps1) | Empaqueta el proyecto para entrega en ZIP (`documentacion/portafolio-m7/`). |
 
 **Stack y piezas clave (resumen):** Vue 3, Vue Router, Vuex; mock en `src/services/authService.js`; store en `src/store/index.js`; guards y rutas en `src/router/index.js`; saneamiento de redirección en `src/utils/sanitizeRedirectPath.js`; despliegue con `netlify.toml` y `public/_redirects`.
 
@@ -51,4 +51,4 @@ Para el **Proyecto 3**, este material prueba que el portafolio no es solo códig
 
 ### 0.4 Prioridad: cumplimiento de rúbricas
 
-La documentación del **Proyecto 3** y los complementos (p. ej. `05_ACCESIBILIDAD_E_INCLUSION.md`) **no reemplazan** la verificación frente a la rúbrica del **Módulo 7** ni la de otras evaluaciones. Mientras se **cumplan** esos criterios documentados en [`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md), puede ampliar el relato del portafolio con herramientas, reflexión e inclusión sin poner en riesgo el entregable evaluado.
+La documentación del **Proyecto 3** y los complementos (p. ej. `05_ACCESIBILIDAD_E_INCLUSION.md`) **no reemplazan** la verificación frente a la rúbrica del **Módulo 7** ni la de otras evaluaciones. Mientras se **cumplan** esos criterios documentados en [`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md), puede ampliar el relato del portafolio con herramientas, reflexión e inclusión sin poner en riesgo el entregable evaluado.

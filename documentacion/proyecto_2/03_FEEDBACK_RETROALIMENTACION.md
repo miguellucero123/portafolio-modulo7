@@ -36,7 +36,7 @@ Las siguientes mejoras son **típicas** de retroalimentación en proyectos simil
 |------------------|--------------------------|
 | “El login debe redirigir sin volver a login en bucle” | Guard `requiresAuth` + `guestOnly` + `redirect` sanitizado. |
 | “Las dependencias no deben mostrar vulnerabilidades graves al entregar” | Actualización a Vite 6 y `npm audit` limpio. |
-| “El portafolio debe poder desplegarse” | Netlify documentado (`docs/DEPLOY_NETLIFY.md`). |
+| “El portafolio debe poder desplegarse” | Netlify documentado (`documentacion/tecnico/DEPLOY_NETLIFY.md`). |
 | “La entrega debe ser trazable frente a la rúbrica” | `RUBRICA_CUMPLIMIENTO.md` y carpeta `MODULO7_ENTREGA/`. |
 
 ---

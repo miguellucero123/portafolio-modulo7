@@ -21,11 +21,13 @@ No hace falta **API key** (Open-Meteo vía `fetch`).
 
 ## Documentación
 
+Material académico y guías largas están en [`documentacion/`](./documentacion/README.md) para dejar la raíz del repo más clara en GitHub.
+
 | Qué | Enlace |
 |-----|--------|
-| Guía completa (rutas, Vuex, Netlify, rúbricas, incidencias) | [`docs/README_DOCUMENTACION.md`](./docs/README_DOCUMENTACION.md) |
+| Guía completa (rutas, Vuex, Netlify, rúbricas, incidencias) | [`documentacion/tecnico/README_DOCUMENTACION.md`](./documentacion/tecnico/README_DOCUMENTACION.md) |
 | Rúbrica Módulo 7 | [`RUBRICA_CUMPLIMIENTO.md`](./RUBRICA_CUMPLIMIENTO.md) |
-| Producto final + portafolio 8 | [`portafolio_8/README.md`](./portafolio_8/README.md) |
-| Despliegue Netlify | [`docs/DEPLOY_NETLIFY.md`](./docs/DEPLOY_NETLIFY.md) |
+| Producto final + portafolio 8 | [`documentacion/portafolio_8/README.md`](./documentacion/portafolio_8/README.md) |
+| Despliegue Netlify | [`documentacion/tecnico/DEPLOY_NETLIFY.md`](./documentacion/tecnico/DEPLOY_NETLIFY.md) |
 
 **Repositorio:** https://github.com/miguellucero123/portafolio-modulo7

@@ -13,10 +13,10 @@ build/
 .netlify/
 
 # ZIP de entrega (opcional; no versionar archivos grandes)
-portafolio-m7/*.zip
+documentacion/portafolio-m7/*.zip
 
 # Copia "solo rúbrica M7" (generada localmente)
-RUBRICA_M7_CONTENIDO/entrega/
-RUBRICA_M7_CONTENIDO/*.zip
+documentacion/RUBRICA_M7_CONTENIDO/entrega/
+documentacion/RUBRICA_M7_CONTENIDO/*.zip
 
 .early.coverage

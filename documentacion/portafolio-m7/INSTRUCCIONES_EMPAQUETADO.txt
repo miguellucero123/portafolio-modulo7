@@ -7,7 +7,7 @@ CONTENIDO ESPERADO DEL ZIP (código fuente)
   - index.html, vite.config.js, package.json, package-lock.json
   - netlify.toml, public/
   - README.md, RUBRICA_CUMPLIMIENTO.md
-  - docs/, MODULO7_ENTREGA/ (documentación y rúbrica)
+  - documentacion/ (guías, proyectos, MODULO7_ENTREGA, etc.)
   - Archivos de configuración del proyecto (.gitignore, etc.)
 
 NO INCLUIR (se regeneran o son locales)
@@ -22,7 +22,8 @@ COPIA SOLO RÚBRICA M7 (sin legacy / clones)
 
     .\scripts\extraer-rubrica-m7.ps1
 
-  Genera la carpeta RUBRICA_M7_CONTENIDO\entrega\ con el proyecto mínimo.
+  Genera la carpeta documentacion\RUBRICA_M7_CONTENIDO\entrega\ con el proyecto mínimo
+  (la copia mínima sigue incluyendo docs\ con DEPLOY y GITHUB para enlaces habituales).
   Luego puede comprimir solo esa carpeta en un ZIP para el docente.
 
 GENERAR EL ZIP (proyecto completo en el repo)
@@ -33,7 +34,7 @@ GENERAR EL ZIP (proyecto completo en el repo)
 
   El archivo se creará aquí:
 
-    portafolio-m7\PORTAFOLIO_M7_ENTREGA.zip
+    documentacion\portafolio-m7\PORTAFOLIO_M7_ENTREGA.zip
 
 GENERAR EL ZIP A MANO
 

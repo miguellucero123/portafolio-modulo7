@@ -11,9 +11,9 @@ Auditoría del producto **ClimaTorre** frente a los criterios **explícitos** de
 | Criterio | Evidencia |
 |----------|-----------|
 | Versión final integrando HTML/CSS/JS, API, Vue, Vue Router, Vuex | SPA en `src/`; estilos en componentes y `src/assets/styles`; `weatherService.js` + composición API; vistas Vue; `src/router/index.js`; **Vuex unificado** (clima + usuario/preferencias/favoritos) en `src/store/index.js` |
-| **Incluye lo construido en módulos previos** (sin sustituir el trabajo intermedio) | Base M6/M7 permanece operativa: listado/detalle, **login/registro**, **Vuex auth**, **`/favoritos`**, **`/preferencias-clima`**, guards; ver **[`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md)** y **[`01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`](./01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md)** |
-| Publicada como portafolio en GitHub | Repositorio público enlazado en [`README.md`](../README.md); pie de app en `App.vue` |
-| Aplicación funcionando, documentación e instrucciones locales | [`README.md`](../README.md): requisitos, `npm install`, `npm run dev`, rutas (clima + auth), variables/API, descripción funcional |
+| **Incluye lo construido en módulos previos** (sin sustituir el trabajo intermedio) | Base M6/M7 permanece operativa: listado/detalle, **login/registro**, **Vuex auth**, **`/favoritos`**, **`/preferencias-clima`**, guards; ver **[`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md)** y **[`01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`](./01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md)** |
+| Publicada como portafolio en GitHub | Repositorio público enlazado en [`README.md`](../../README.md); pie de app en `App.vue` |
+| Aplicación funcionando, documentación e instrucciones locales | [`README.md`](../../README.md): requisitos, `npm install`, `npm run dev`, rutas (clima + auth), variables/API, descripción funcional |
 
 ---
 
@@ -23,15 +23,15 @@ Auditoría del producto **ClimaTorre** frente a los criterios **explícitos** de
 
 | Criterio | Evidencia |
 |----------|-----------|
-| **Home:** listado de lugares con clima actual | [`Home.vue`](../src/views/Home.vue), tarjetas lugar + temperatura/estado |
-| **Detalle:** pronóstico varios días + estadísticas semana | [`LugarDetalle.vue`](../src/views/LugarDetalle.vue): `pronosticoSemanal`, sección estadísticas, gráfico tendencia |
+| **Home:** listado de lugares con clima actual | [`Home.vue`](../../src/views/Home.vue), tarjetas lugar + temperatura/estado |
+| **Detalle:** pronóstico varios días + estadísticas semana | [`LugarDetalle.vue`](../../src/views/LugarDetalle.vue): `pronosticoSemanal`, sección estadísticas, gráfico tendencia |
 | **Vista/componente extra** (configuración, favoritos, historial, etc.) | `/favoritos`, `/preferencias-clima` (autenticado); login/registro (Módulo 7). Opcional: favoritos en tarjeta/detalle |
 
 ### 2.2 Consumo de API de clima
 
 | Criterio | Evidencia |
 |----------|-----------|
-| Datos desde API externa (no fijos como única fuente) | **Open-Meteo** en [`weatherService.js`](../src/services/weatherService.js): `fetch` por coordenadas; actualización y caché en `localStorage` |
+| Datos desde API externa (no fijos como única fuente) | **Open-Meteo** en [`weatherService.js`](../../src/services/weatherService.js): `fetch` por coordenadas; actualización y caché en `localStorage` |
 | Axios **o** fetch | Uso de **`fetch`** nativo (alternativa válida al enunciado) |
 | Estados “cargando…” y error | `weatherLoading`, `weatherError` en **Vuex**; UI en `Home.vue` (`loading`, `error` vía `useWeather` → store); detalle usa mismo flujo |
 
@@ -39,16 +39,16 @@ Auditoría del producto **ClimaTorre** frente a los criterios **explícitos** de
 
 | Criterio | Evidencia |
 |----------|-----------|
-| Lista de lugares | `state.weatherLugares` + getter `weatherLugares` / `lugarByWeatherId` en [`store/index.js`](../src/store/index.js) |
+| Lista de lugares | `state.weatherLugares` + getter `weatherLugares` / `lugarByWeatherId` en [`store/index.js`](../../src/store/index.js) |
 | Lugar seleccionado y pronóstico | `selectedLugarId` + getter `lugarSeleccionadoPronostico`; se actualiza en detalle con `SET_SELECTED_LUGAR_ID` |
 | Preferencias (°C/°F) y banderas carga/error | `preferences.tempUnit` (y `theme`); `weatherLoading`, `weatherError` |
-| Acción que consulta API | `fetchWeather` en store; [`useWeather.js`](../src/composables/useWeather.js) delega en `dispatch('fetchWeather')` |
+| Acción que consulta API | `fetchWeather` en store; [`useWeather.js`](../../src/composables/useWeather.js) delega en `dispatch('fetchWeather')` |
 
 ### 2.4 Estadísticas y alertas meteorológicas
 
 | Criterio | Evidencia |
 |----------|-----------|
-| Estadísticas semanales: mín, máx, promedio, conteos por tipo de clima | [`calcularEstadisticas`](../src/utils/helpers.js) + UI en `LugarDetalle.vue` (`diasPorEstado`, tarjetas) |
+| Estadísticas semanales: mín, máx, promedio, conteos por tipo de clima | [`calcularEstadisticas`](../../src/utils/helpers.js) + UI en `LugarDetalle.vue` (`diasPorEstado`, tarjetas) |
 | Al menos **una alerta** por reglas simples | Sección **“Alertas meteorológicas”** en `LugarDetalle.vue`: reglas semana lluviosa / ola de calor / viento fuerte |
 
 ### 2.5 Estabilidad mínima
@@ -64,15 +64,15 @@ Auditoría del producto **ClimaTorre** frente a los criterios **explícitos** de
 
 | Criterio | Evidencia |
 |----------|-----------|
-| Proyecto en **un único .zip** | Responsabilidad de entrega; script [`empaquetar-portafolio-m7.ps1`](../scripts/empaquetar-portafolio-m7.ps1) genera ZIP desde la raíz |
-| **README.md** con enlace GitHub público | [`README.md`](../README.md) sección repositorio |
-| Instrucciones locales: requisitos Node/npm | [`README.md`](../README.md) |
-| Pasos `npm install`, `npm run dev` (o similar) | [`README.md`](../README.md) |
-| Variables / API key / `.env` si corresponde | [`README.md`](../README.md) sección **Variables de entorno y API** — Open-Meteo **sin clave** por defecto |
-| Rutas principales | [`README.md`](../README.md): Home, Detalle (`/lugar/:id`), favoritos, preferencias, login, registro |
-| Descripción funcional: API, estadísticas, alertas, preferencias | [`README.md`](../README.md) + este documento |
+| Proyecto en **un único .zip** | Responsabilidad de entrega; script [`empaquetar-portafolio-m7.ps1`](../../scripts/empaquetar-portafolio-m7.ps1) genera ZIP desde la raíz |
+| **README.md** con enlace GitHub público | [`README.md`](../../README.md) sección repositorio |
+| Instrucciones locales: requisitos Node/npm | [`README.md`](../../README.md) |
+| Pasos `npm install`, `npm run dev` (o similar) | [`README.md`](../../README.md) |
+| Variables / API key / `.env` si corresponde | [`README.md`](../../README.md) sección **Variables de entorno y API** — Open-Meteo **sin clave** por defecto |
+| Rutas principales | [`README.md`](../../README.md): Home, Detalle (`/lugar/:id`), favoritos, preferencias, login, registro |
+| Descripción funcional: API, estadísticas, alertas, preferencias | [`README.md`](../../README.md) + este documento |
 | Capturas opcionales | Opcional — puede añadir imágenes en README o en carpeta `docs/` según docente |
-| Trazabilidad **Portafolio 7** + mejoras de cierre | [`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md), [`proyecto_2/`](../proyecto_2/README.md), [`MODULO7_ENTREGA/`](../MODULO7_ENTREGA/README.md); síntesis en [`01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`](./01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md) |
+| Trazabilidad **Portafolio 7** + mejoras de cierre | [`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md), [`proyecto_2/`](../proyecto_2/README.md), [`MODULO7_ENTREGA/`](../MODULO7_ENTREGA/README.md); síntesis en [`01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`](./01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md) |
 
 ---
 
@@ -89,7 +89,7 @@ Lo siguiente **no se retiró** al cerrar el Portafolio 8; forma parte del entreg
 | Rutas protegidas | `/favoritos`, `/preferencias-clima`; `meta.requiresAuth` |
 | Preferencias y favoritos desde store | `preferences`, `favoriteIds`, `TOGGLE_FAVORITE`, vistas asociadas |
 | Redirección segura tras login | `sanitizeRedirectPath.js` en login/registro |
-| Entregables M7 (código, README, ZIP) | Compartidos con el mismo repo; ver [`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md) secciones 5–6 |
+| Entregables M7 (código, README, ZIP) | Compartidos con el mismo repo; ver [`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md) secciones 5–6 |
 
 ### 4.2 Mejoras documentadas (Proyecto 2 / operación)
 
@@ -104,7 +104,7 @@ Lo siguiente **no se retiró** al cerrar el Portafolio 8; forma parte del entreg
 
 1. **[`01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`](./01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md)** — cómo se presenta el producto único.  
 2. **Secciones 1–3 de este documento** — criterios explícitos Portafolio 8.  
-3. **[`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md)** — detalle M7 si la evaluación lo exige por separado.
+3. **[`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md)** — detalle M7 si la evaluación lo exige por separado.
 
 ---
 

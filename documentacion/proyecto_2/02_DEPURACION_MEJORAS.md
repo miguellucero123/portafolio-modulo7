@@ -9,7 +9,7 @@
 | **Código muerto / comentarios** en auth | Comentario alineado a rúbrica (mock permitido) | `src/services/authService.js` |
 | **Enlace GitHub** en pie de página desactualizado | `App.vue` apunta a `portafolio-modulo7` | `src/App.vue` |
 | **Vulnerabilidades** de dependencias (`esbuild`, `rollup`, `immutable`) | `npm audit fix` + subida a **Vite 6** | `package.json`, `package-lock.json` |
-| **Duplicación** de entrega en repo | Carpetas `portafolio-m7`, `RUBRICA_M7_CONTENIDO` con scripts de empaquetado | `scripts/`, documentación |
+| **Duplicación** de entrega en repo | Carpetas `documentacion/portafolio-m7`, `documentacion/RUBRICA_M7_CONTENIDO` con scripts de empaquetado | `scripts/`, documentación |
 
 ## 2.2 Mejoras de usabilidad y presentación
 

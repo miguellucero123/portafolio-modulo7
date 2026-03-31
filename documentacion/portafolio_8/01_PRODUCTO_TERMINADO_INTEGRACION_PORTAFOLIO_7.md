@@ -6,7 +6,7 @@ Este documento declara cómo **ClimaTorre** es el **producto final** descrito en
 
 ## 1.1 Qué incluye “Portafolio 7” (Módulo 7) dentro del producto
 
-En este proyecto, **Portafolio 7** corresponde al cumplimiento documentado en **[`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md)** y material de apoyo en **`MODULO7_ENTREGA/`**. Capacidades que **siguen presentes** en la versión final:
+En este proyecto, **Portafolio 7** corresponde al cumplimiento documentado en **[`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md)** y material de apoyo en **`MODULO7_ENTREGA/`**. Capacidades que **siguen presentes** en la versión final:
 
 | Área Portafolio 7 | Qué aporta al producto terminado | Evidencia principal |
 |-------------------|-----------------------------------|---------------------|
@@ -62,7 +62,7 @@ La rúbrica **Portafolio 8** exige el **cierre integrado** (API, Vuex de clima, 
 
 | Recurso | Rol |
 |---------|-----|
-| [`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md) | Portafolio 7 (M7) punto por punto |
+| [`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md) | Portafolio 7 (M7) punto por punto |
 | [`RUBRICA_CUMPLIMIENTO_PORTAFOLIO_8.md`](./RUBRICA_CUMPLIMIENTO_PORTAFOLIO_8.md) | Portafolio 8 punto por punto |
 | [`proyecto_2/`](../proyecto_2/README.md) | Revisión, feedback y cierre sobre el mismo código |
 | [`proyecto_3/`](../proyecto_3/README.md) | Portafolio profesional, inclusión (documental), sin sustituir rúbricas |

@@ -2,7 +2,7 @@
 
 *Documento breve según el punto 2 del enunciado del Proyecto 3. Sustituya los marcadores `[COMPLETAR]`.*
 
-**Apoyo en el repositorio:** puede citar el cumplimiento del **Módulo 7** ([`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md), [`MODULO7_ENTREGA/`](../MODULO7_ENTREGA/README.md)) y las mejoras narradas en **`proyecto_2/`** (véase también [`00_CONTEXTO_PORTAFOLIO_M7_Y_PROYECTO_2.md`](./00_CONTEXTO_PORTAFOLIO_M7_Y_PROYECTO_2.md)).
+**Apoyo en el repositorio:** puede citar el cumplimiento del **Módulo 7** ([`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md), [`MODULO7_ENTREGA/`](../MODULO7_ENTREGA/README.md)) y las mejoras narradas en **`proyecto_2/`** (véase también [`00_CONTEXTO_PORTAFOLIO_M7_Y_PROYECTO_2.md`](./00_CONTEXTO_PORTAFOLIO_M7_Y_PROYECTO_2.md)).
 
 ## 3.1 Herramientas utilizadas para construir o mejorar el portafolio
 

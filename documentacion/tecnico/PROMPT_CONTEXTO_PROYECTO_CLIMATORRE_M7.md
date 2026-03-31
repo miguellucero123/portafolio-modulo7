@@ -22,11 +22,11 @@ Eres un **desarrollador front-end** que ayuda a mantener y extender **ClimaTorre
 ### Documentación en el repo
 
 - **Cumplimiento rúbrica:** `RUBRICA_CUMPLIMIENTO.md` (M7); **`portafolio_8/`** — producto terminado que **incluye todo M7** + rúbrica final: [`../portafolio_8/01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`](../portafolio_8/01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md), [`../portafolio_8/RUBRICA_CUMPLIMIENTO_PORTAFOLIO_8.md`](../portafolio_8/RUBRICA_CUMPLIMIENTO_PORTAFOLIO_8.md).
-- **Entrega ZIP completa:** carpeta `portafolio-m7/` + script `scripts/empaquetar-portafolio-m7.ps1`.
+- **Entrega ZIP completa:** carpeta `documentacion/portafolio-m7/` + script `scripts/empaquetar-portafolio-m7.ps1`.
 - **Copia mínima solo rúbrica M7:** `RUBRICA_M7_CONTENIDO/` + `scripts/extraer-rubrica-m7.ps1` (genera `entrega/` sin código legacy innecesario).
 - **Proyecto 2 (revisión, depuración, feedback, cierre):** carpeta `proyecto_2/` con `01`–`04`, anexo y **`INFORME_PROYECTO_2_COMPLETO.md`** (Parte A para Word + Parte B alineada a los mismos documentos). Opcional: `.docx` generado con Pandoc.
 - **Proyecto 3 (portafolio profesional, evidencias, reflexión):** carpeta `proyecto_3/` con **`00_CONTEXTO_PORTAFOLIO_M7_Y_PROYECTO_2.md`** (resumen M7 + `proyecto_2/`), marco del enunciado, construcción/revisión, **`05_ACCESIBILIDAD_E_INCLUSION.md`**, **`03_INFORME_EVIDENCIAS_PROCESO.md`**, **`04_REFLEXION_PERSONAL.md`** y **`INFORME_PROYECTO_3_COMPLETO.md`**. Los complementos de `proyecto_3/` **no sustituyen** el cumplimiento de rúbricas; **`RUBRICA_CUMPLIMIENTO.md`** sigue siendo la referencia obligatoria para M7.
-- **Guías:** `docs/DEPLOY_NETLIFY.md`, `docs/GITHUB_SETUP_M7.md`, `MODULO7_ENTREGA/`.
+- **Guías:** `documentacion/tecnico/DEPLOY_NETLIFY.md`, `documentacion/tecnico/GITHUB_SETUP_M7.md`, `documentacion/MODULO7_ENTREGA/`.
 
 ### Cómo debes trabajar
 

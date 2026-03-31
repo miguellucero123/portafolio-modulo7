@@ -1,18 +1,18 @@
 # ClimaTorre — documentación completa
 
-Guía ampliada del repositorio (antes concentrada en el `README.md` de la raíz). La página principal de GitHub muestra solo [README.md](../README.md) resumido.
+Guía ampliada del repositorio (antes concentrada en el `README.md` de la raíz). La página principal de GitHub muestra solo [README.md](../../README.md) resumido.
 
 ---
 
 Aplicación web de tipo SPA (Single Page Application) para consulta de información meteorológica en Torres del Paine (circuitos W y O). El módulo actual incorpora autenticación, gestión de estado global con Vuex y rutas condicionadas por sesión.
 
-**Verificación frente al enunciado del Módulo 7:** [`RUBRICA_CUMPLIMIENTO.md`](../RUBRICA_CUMPLIMIENTO.md).
+**Verificación frente al enunciado del Módulo 7:** [`RUBRICA_CUMPLIMIENTO.md`](../../RUBRICA_CUMPLIMIENTO.md).
 
 **Portafolio 8 (producto terminado — integra Portafolio 7 + rúbrica final API/Vuex clima, estadísticas, alertas, entregables):** carpeta [`portafolio_8/`](../portafolio_8/README.md) — leer primero [`01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md`](../portafolio_8/01_PRODUCTO_TERMINADO_INTEGRACION_PORTAFOLIO_7.md); matriz [`RUBRICA_CUMPLIMIENTO_PORTAFOLIO_8.md`](../portafolio_8/RUBRICA_CUMPLIMIENTO_PORTAFOLIO_8.md).
 
 **Entrega en ZIP:** carpeta [`portafolio-m7/`](../portafolio-m7/README.md) (instrucciones y script `scripts/empaquetar-portafolio-m7.ps1`).
 
-**Solo requisitos rúbrica M7 (copia mínima del proyecto):** [`RUBRICA_M7_CONTENIDO/`](../RUBRICA_M7_CONTENIDO/README.md) y script `scripts/extraer-rubrica-m7.ps1` (genera `RUBRICA_M7_CONTENIDO/entrega/` sin código legacy ni clones).
+**Solo requisitos rúbrica M7 (copia mínima del proyecto):** [`RUBRICA_M7_CONTENIDO/`](../RUBRICA_M7_CONTENIDO/README.md) y script `scripts/extraer-rubrica-m7.ps1` (genera `documentacion/RUBRICA_M7_CONTENIDO/entrega/` sin código legacy ni clones).
 
 **Proyecto 2 (revisión, mejora, feedback y cierre de portafolio):** [`proyecto_2/`](../proyecto_2/README.md).
 

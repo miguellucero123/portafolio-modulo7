@@ -1,9 +1,9 @@
-# Genera PORTAFOLIO_M7_ENTREGA.zip en portafolio-m7/ excluyendo artefactos pesados.
+# Genera PORTAFOLIO_M7_ENTREGA.zip en documentacion/portafolio-m7/ excluyendo artefactos pesados.
 # Ejecutar desde la raíz del repositorio: .\scripts\empaquetar-portafolio-m7.ps1
 
 $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..')
-$outDir = Join-Path $root 'portafolio-m7'
+$outDir = Join-Path $root 'documentacion\portafolio-m7'
 $zipName = 'PORTAFOLIO_M7_ENTREGA.zip'
 $zipPath = Join-Path $outDir $zipName
 
@@ -14,7 +14,7 @@ try {
 
     $excludeDirs = @(
         'node_modules', 'dist', 'build', '.git', '.netlify', '.cursor',
-        '.vscode', '.idea', 'portafolio-m7'
+        '.vscode', '.idea', 'documentacion\portafolio-m7'
     )
 
     robocopy $root $staging /E /NFL /NDL /NJH /NJS /NC /NS /NP `

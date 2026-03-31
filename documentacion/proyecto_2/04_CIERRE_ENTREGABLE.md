@@ -27,8 +27,8 @@ No implica “sin deuda técnica”, sino **deuda conocida y priorizada** (ver a
 | Artefacto | Ubicación |
 |-----------|-----------|
 | Código fuente | `src/`, raíz del proyecto |
-| ZIP “solo rúbrica” (opcional) | Script `scripts/extraer-rubrica-m7.ps1` → `RUBRICA_M7_CONTENIDO/entrega/` |
-| ZIP completo (opcional) | `scripts/empaquetar-portafolio-m7.ps1` → `portafolio-m7/` |
+| ZIP “solo rúbrica” (opcional) | Script `scripts/extraer-rubrica-m7.ps1` → `documentacion/RUBRICA_M7_CONTENIDO/entrega/` |
+| ZIP completo (opcional) | `scripts/empaquetar-portafolio-m7.ps1` → `documentacion/portafolio-m7/` |
 
 ## 4.4 Mantenimiento posterior al curso
 

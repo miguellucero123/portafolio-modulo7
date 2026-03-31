@@ -9,7 +9,7 @@ Esta carpeta documenta el cumplimiento de la **rúbrica explícita del portafoli
 
 **Repositorio público:** https://github.com/miguellucero123/portafolio-modulo7  
 
-Para empaquetar en **un solo `.zip`**, ejecute [`scripts/empaquetar-portafolio-m7.ps1`](../scripts/empaquetar-portafolio-m7.ps1) desde la raíz del repo (o comprima el proyecto según indique su docente, incluyendo `README.md` y `package-lock.json`).
+Para empaquetar en **un solo `.zip`**, ejecute [`scripts/empaquetar-portafolio-m7.ps1`](../../scripts/empaquetar-portafolio-m7.ps1) desde la raíz del repo (o comprima el proyecto según indique su docente, incluyendo `README.md` y `package-lock.json`).
 
 ---
 
