@@ -40,9 +40,6 @@
         ¿No tienes cuenta?
         <router-link to="/registro" class="auth-link">Regístrate</router-link>
       </p>
-      <p class="auth-hint">
-        Cuentas demo: <code>demo@climatorre.cl</code> / <code>demo123</code>
-      </p>
     </div>
   </div>
 </template>
@@ -190,19 +187,5 @@ export default {
 
 .auth-link:hover {
   text-decoration: underline;
-}
-
-.auth-hint {
-  margin-top: 1rem;
-  font-size: 0.8rem;
-  color: #94a3b8;
-  text-align: center;
-}
-
-.auth-hint code {
-  background: #f1f5f9;
-  padding: 0.1rem 0.35rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
 }
 </style>

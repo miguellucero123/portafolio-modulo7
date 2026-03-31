@@ -62,10 +62,7 @@ El acceso sin sesión a rutas protegidas provoca redirección a `/login` con el 
 
 ## Credenciales de prueba (entorno demo)
 
-| Usuario | Contraseña |
-|---------|------------|
-| demo@climatorre.cl | demo123 |
-| explorador@example.com | paine2025 |
+Las cuentas de demostración están definidas en el mock del cliente (`src/services/authService.js`). Úsalas solo en desarrollo; no publiques ni reutilices esos valores como si fueran secretos reales.
 
 ## Requisitos previos
 

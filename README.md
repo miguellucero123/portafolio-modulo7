@@ -11,11 +11,7 @@ npm install
 npm run dev
 ```
 
-Abre **http://localhost:5174** (puerto por defecto en `vite.config.js`).
-
-| Demo | Contraseña |
-|------|------------|
-| `demo@climatorre.cl` | `demo123` |
+Abre **http://localhost:5174** (puerto por defecto en `vite.config.js`). El login de demostración es un mock en el cliente (solo para pruebas locales).
 
 No hace falta **API key** (Open-Meteo vía `fetch`).
 
